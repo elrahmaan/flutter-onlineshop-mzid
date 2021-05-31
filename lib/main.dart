@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         nextScreen: Home(),
         backgroundColor: Color(0xFF07080A),
         splashTransition: SplashTransition.scaleTransition,
-        duration: 2000,
+        duration: 2700,
       ),
     );
   }
