@@ -22,6 +22,23 @@ class _ProductDetailState extends State<ProductDetail> {
           onPressed: () {},
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.black),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart, color: Colors.black),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_sharp, color: Colors.black),
+            label: 'User',
+          ),
+        ],
+      ),
       body: Container(
         child: ListView(
           children: <Widget>[
@@ -38,8 +55,20 @@ class _ProductDetailState extends State<ProductDetail> {
                     height: 10,
                   ),
 
-                  //DESCRIPTIOn
+                  //DESCRIPTION
                   _description(),
+                  SizedBox(
+                    height: 15,
+                  ),
+
+                  //SIZE SELECTION
+                  _chooseSize(),
+                  SizedBox(
+                    height: 15,
+                  ),
+
+                  //COLOR SELECTION
+                  _chooseColor(),
                 ],
               ),
             ),
@@ -83,7 +112,7 @@ class _ProductDetailState extends State<ProductDetail> {
             children: <Widget>[
               Text("Kaos Oblong",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 23,
                   )),
               Text(
                 "IDR 100.000",
@@ -114,6 +143,189 @@ class _ProductDetailState extends State<ProductDetail> {
           textAlign: TextAlign.justify,
         )
       ],
+    );
+  }
+
+  Widget _chooseSize() {
+    return Container(
+      // color: Colors.blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Choose your size :",
+            style: TextStyle(fontSize: 18),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+
+          //Size Item
+          Container(
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //Size S
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    child: Text(
+                      "S",
+                    ),
+                    color: Colors.grey[200],
+                    onPressed: () {},
+                  ),
+                ),
+
+                //Size M
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    child: Text(
+                      "M",
+                    ),
+                    color: Colors.grey[200],
+                    onPressed: () {},
+                  ),
+                ),
+
+                //Size L
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    child: Text(
+                      "L",
+                    ),
+                    color: Colors.grey[200],
+                    onPressed: () {},
+                  ),
+                ),
+
+                //Size XL
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    child: Text(
+                      "XL",
+                    ),
+                    color: Colors.grey[200],
+                    onPressed: () {},
+                  ),
+                ),
+
+                //Size XXL
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    child: Text(
+                      "XXL",
+                    ),
+                    color: Colors.grey[200],
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _chooseColor() {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Choose your color :",
+            style: TextStyle(fontSize: 18),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+
+          //Color Item
+          Container(
+            width: 350,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                //Red
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    color: Colors.red[400],
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.15), width: 2)),
+                    onPressed: () {},
+                  ),
+                ),
+
+                //blue
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    color: Colors.blue[400],
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.15), width: 2)),
+                    onPressed: () {},
+                  ),
+                ),
+
+                //grey
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    color: Colors.grey[400],
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.15), width: 2)),
+                    onPressed: () {},
+                  ),
+                ),
+
+                //black
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    color: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.15), width: 2)),
+                    onPressed: () {},
+                  ),
+                ),
+
+                //white
+                Container(
+                  height: 65,
+                  width: 65,
+                  child: FlatButton(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: Colors.black.withOpacity(0.15), width: 2)),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
