@@ -6,6 +6,8 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +47,7 @@ class _ProductDetailState extends State<ProductDetail> {
             //IMAGE
             _productImage(),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -69,6 +71,18 @@ class _ProductDetailState extends State<ProductDetail> {
 
                   //COLOR SELECTION
                   _chooseColor(),
+                  SizedBox(
+                    height: 15,
+                  ),
+
+                  //SET QUANTITY
+                  _setQuantity(),
+                  SizedBox(
+                    height: 15,
+                  ),
+
+                  //ADD TO CART
+                  _addToCartButton(),
                 ],
               ),
             ),
@@ -325,6 +339,100 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _setQuantity() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          "Quantity",
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              height: 40,
+              width: 40,
+              color: Color(0xFF1C1C1C),
+              child: InkWell(
+                child: Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  setState(() {
+                    if (quantity > 1) {
+                      quantity--;
+                    }
+                  });
+                },
+              ),
+            ),
+            Container(
+              height: 40,
+              width: 60,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color(0xFF1C1C1C),
+                ),
+              ),
+              child: Text(
+                quantity.toString(),
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Container(
+              height: 40,
+              width: 40,
+              color: Color(0xFF1C1C1C),
+              child: InkWell(
+                child: Container(
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    quantity++;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _addToCartButton() {
+    return Container(
+      height: 60,
+      child: Container(
+        height: 45,
+        width: double.infinity,
+        child: RaisedButton(
+          child: Text(
+            "Add To Cart",
+            style: TextStyle(color: Colors.white),
+          ),
+          color: Color(0xFF1C1C1C),
+          onPressed: () {},
+        ),
       ),
     );
   }
