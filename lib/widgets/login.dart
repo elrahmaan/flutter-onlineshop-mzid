@@ -8,8 +8,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String error = "";
   bool passwordVisible = false;

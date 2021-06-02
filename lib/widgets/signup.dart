@@ -9,8 +9,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String error = "";
   bool passwordVisible = false;
@@ -25,15 +27,15 @@ class _SignUpState extends State<SignUp> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Sign up With",
+            "You must have an account",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 12,
               color: Color(0xFF45D1FD),
               height: 2,
             ),
           ),
           Text(
-            "YOUR EMAIL",
+            "SIGN UP",
             style: TextStyle(
               fontSize: 32,
               color: Color(0xFF45D1FD),
@@ -41,6 +43,44 @@ class _SignUpState extends State<SignUp> {
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
             ),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          TextFormField(
+            controller: userNameController,
+            validator: (value) {},
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+                color: Color(0xFF45D1FD),
+                fontWeight: FontWeight.bold,
+                fontSize: 16),
+            decoration: InputDecoration(
+                hintText: "User Name",
+                hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF45D1FD),
+                  fontWeight: FontWeight.bold,
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    )),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: Color(0xFF45D1FD), width: 2),
+                ),
+                prefixIcon:
+                    Icon(Icons.person_pin_outlined, color: Color(0xFF45D1FD)),
+                filled: true,
+                fillColor: Color(0xFF1B5163),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 0,
+                )),
+            onChanged: (value) {},
           ),
           SizedBox(
             height: 16,
@@ -139,6 +179,44 @@ class _SignUpState extends State<SignUp> {
             onChanged: (value) {},
           ),
           SizedBox(
+            height: 16,
+          ),
+          TextFormField(
+            controller: phoneNoController,
+            validator: (value) {},
+            keyboardType: TextInputType.number,
+            style: TextStyle(
+                color: Color(0xFF45D1FD),
+                fontWeight: FontWeight.bold,
+                fontSize: 16),
+            decoration: InputDecoration(
+                hintText: "Phone Number",
+                hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF45D1FD),
+                  fontWeight: FontWeight.bold,
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    )),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: Color(0xFF45D1FD), width: 2),
+                ),
+                prefixIcon: Icon(Icons.phone_android_outlined,
+                    color: Color(0xFF45D1FD)),
+                filled: true,
+                fillColor: Color(0xFF1B5163),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 0,
+                )),
+            onChanged: (value) {},
+          ),
+          SizedBox(
             height: 24,
           ),
           // Row(
@@ -204,37 +282,42 @@ class _SignUpState extends State<SignUp> {
             height: 24,
           ),
 
-          Text(
-            "or Sign up With",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF45D1FD),
-              height: 1,
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          IconButton(
-            onPressed: () {
-              // signInWithGoogle().then((result) {
-              //   if (result != null) {
-              //     Navigator.of(context).push(
-              //       MaterialPageRoute(
-              //         builder: (context) {
-              //           return Profile_Screen();
-              //         },
-              //       ),
-              //     );
-              //   }
-              // });
-            },
-            icon: Icon(
-              Entypo.google__with_circle,
-              size: 40,
-              color: Color(0xFF45D1FD),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "or Sign up With",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF45D1FD),
+                  height: 1,
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              IconButton(
+                onPressed: () {
+                  // signInWithGoogle().then((result) {
+                  //   if (result != null) {
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) {
+                  //           return Profile_Screen();
+                  //         },
+                  //       ),
+                  //     );
+                  //   }
+                  // });
+                },
+                icon: Icon(
+                  Entypo.google__with_circle,
+                  size: 40,
+                  color: Color(0xFF45D1FD),
+                ),
+              ),
+            ],
           ),
         ],
       ),

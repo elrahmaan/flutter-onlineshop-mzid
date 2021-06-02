@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: CustomPaint(
                   painter: CurvePainter(login),
                   child: Container(
-                    padding: EdgeInsets.only(bottom: login ? 0 : 55),
+                    padding: EdgeInsets.only(bottom: login ? 0 : 50),
                     child: Center(
                       child: SingleChildScrollView(
                         child: Padding(
