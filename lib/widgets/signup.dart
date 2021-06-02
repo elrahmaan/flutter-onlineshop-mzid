@@ -49,7 +49,13 @@ class _SignUpState extends State<SignUp> {
           ),
           TextFormField(
             controller: userNameController,
-            validator: (value) {},
+            validator: (value) {
+              if (value == "") {
+                return "Please enter username";
+              } else if (value.length < 6) {
+                return "Username is to short";
+              }
+            },
             keyboardType: TextInputType.text,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
