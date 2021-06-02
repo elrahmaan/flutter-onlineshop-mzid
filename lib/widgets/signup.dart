@@ -189,7 +189,11 @@ class _SignUpState extends State<SignUp> {
           ),
           TextFormField(
             controller: phoneNoController,
-            validator: (value) {},
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter phone number';
+              }
+            },
             keyboardType: TextInputType.number,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
