@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:online_shop/widgets/product_item.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -240,102 +241,21 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    GestureDetector(
+                    InkWell(
+                        onTap: () {},
+                        child: ProductItem(
+                          image:
+                              "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                          price: 150000,
+                          name: "Kaos 1",
+                        )),
+                    InkWell(
                       onTap: () {},
-                      child: Card(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width:
-                              MediaQuery.of(context).size.width * 0.2 * 2 + 30,
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Container(
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "IDR 100.000",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                          color: Color(0xFF1C1C1C)),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Kaos Oblong",
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Card(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width:
-                              MediaQuery.of(context).size.width * 0.2 * 2 + 30,
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Container(
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "IDR 100.000",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                          color: Color(0xFF1C1C1C)),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Kaos",
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: ProductItem(
+                        image:
+                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                        price: 115000,
+                        name: "Kaos 2",
                       ),
                     ),
                   ],
@@ -375,102 +295,22 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    GestureDetector(
+                    InkWell(
                       onTap: () {},
-                      child: Card(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width:
-                              MediaQuery.of(context).size.width * 0.2 * 2 + 30,
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Container(
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "IDR 100.000",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                          color: Color(0xFF1C1C1C)),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Kaos",
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: ProductItem(
+                        image:
+                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                        price: 150000,
+                        name: "Kaos 3",
                       ),
                     ),
-                    GestureDetector(
+                    InkWell(
                       onTap: () {},
-                      child: Card(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          width:
-                              MediaQuery.of(context).size.width * 0.2 * 2 + 30,
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                flex: 3,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Container(
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "IDR 100.000",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                          color: Color(0xFF1C1C1C)),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "Kaos",
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      child: ProductItem(
+                        image:
+                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                        price: 130000,
+                        name: "Kaos 4",
                       ),
                     ),
                   ],
