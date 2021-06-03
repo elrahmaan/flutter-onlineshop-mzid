@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
 
 class Home extends StatefulWidget {
@@ -112,99 +113,29 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 //ITEM CATEGORY
-                Column(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-                      backgroundColor: Color(0xFF1C1C1C),
-                      // backgroundColor: Color(color),
-                      child: Container(
-                        height: 40,
-                        child: Image(
-                          color: Colors.white,
-                          image: NetworkImage(
-                              'https://img.icons8.com/ios/452/t-shirt--v1.png'),
-                        ),
-                      ),
-                    ),
-                    Text("T-Shirt")
-                  ],
+                CategoryItem(
+                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                  name: "T-Shirt",
                 ),
 
-                Column(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-                      backgroundColor: Color(0xFF1C1C1C),
-                      // backgroundColor: Color(color),
-                      child: Container(
-                        height: 40,
-                        child: Image(
-                          color: Colors.white,
-                          image: NetworkImage(
-                              'https://img.icons8.com/ios/452/t-shirt--v1.png'),
-                        ),
-                      ),
-                    ),
-                    Text("T-Shirt")
-                  ],
+                CategoryItem(
+                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                  name: "T-Shirt",
                 ),
 
-                Column(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-                      backgroundColor: Color(0xFF1C1C1C),
-                      // backgroundColor: Color(color),
-                      child: Container(
-                        height: 40,
-                        child: Image(
-                          color: Colors.white,
-                          image: NetworkImage(
-                              'https://img.icons8.com/ios/452/t-shirt--v1.png'),
-                        ),
-                      ),
-                    ),
-                    Text("T-Shirt")
-                  ],
+                CategoryItem(
+                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                  name: "T-Shirt",
                 ),
 
-                Column(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-                      backgroundColor: Color(0xFF1C1C1C),
-                      // backgroundColor: Color(color),
-                      child: Container(
-                        height: 40,
-                        child: Image(
-                          color: Colors.white,
-                          image: NetworkImage(
-                              'https://img.icons8.com/ios/452/t-shirt--v1.png'),
-                        ),
-                      ),
-                    ),
-                    Text("T-Shirt")
-                  ],
+                CategoryItem(
+                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                  name: "T-Shirt",
                 ),
 
-                Column(
-                  children: [
-                    CircleAvatar(
-                      maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-                      backgroundColor: Color(0xFF1C1C1C),
-                      // backgroundColor: Color(color),
-                      child: Container(
-                        height: 40,
-                        child: Image(
-                          color: Colors.white,
-                          image: NetworkImage(
-                              'https://img.icons8.com/ios/452/t-shirt--v1.png'),
-                        ),
-                      ),
-                    ),
-                    Text("T-Shirt")
-                  ],
+                CategoryItem(
+                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                  name: "T-Shirt",
                 ),
               ],
             ),
