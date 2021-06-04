@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
 
@@ -113,29 +114,62 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 //ITEM CATEGORY
-                CategoryItem(
-                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                  name: "T-Shirt",
+                // Setiap kategori mengirimkan namanya agar dapat diterima dan di filter pada halaman Product List
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) =>
+                            ProductList(category: "T-Shirt")));
+                  },
+                  child: CategoryItem(
+                    image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
+                    name: "T-Shirt",
+                  ),
                 ),
 
-                CategoryItem(
-                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                  name: "T-Shirt",
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProductList(category: "Jacket")));
+                  },
+                  child: CategoryItem(
+                    image: 'https://img.icons8.com/ios/2x/tracksuit.png',
+                    name: "Jacket",
+                  ),
                 ),
 
-                CategoryItem(
-                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                  name: "T-Shirt",
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProductList(category: "Pants")));
+                  },
+                  child: CategoryItem(
+                    image: 'https://img.icons8.com/ios/2x/trousers.png',
+                    name: "Pants",
+                  ),
                 ),
 
-                CategoryItem(
-                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                  name: "T-Shirt",
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) =>
+                            ProductList(category: "Accessories")));
+                  },
+                  child: CategoryItem(
+                    image: 'https://img.icons8.com/ios/2x/apple-watch.png',
+                    name: "Accessoris",
+                  ),
                 ),
 
-                CategoryItem(
-                  image: 'https://img.icons8.com/ios/452/t-shirt--v1.png',
-                  name: "T-Shirt",
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProductList(category: "Helmet")));
+                  },
+                  child: CategoryItem(
+                    image: 'https://img.icons8.com/ios/2x/motorbike-helmet.png',
+                    name: "Helmet",
+                  ),
                 ),
               ],
             ),
@@ -172,23 +206,23 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    InkWell(
-                        onTap: () {},
-                        child: ProductItem(
-                          image:
-                              "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                          price: 150000,
-                          name: "Kaos 1",
-                        )),
-                    InkWell(
-                      onTap: () {},
-                      child: ProductItem(
-                        image:
-                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                        price: 115000,
-                        name: "Kaos 2",
-                      ),
-                    ),
+                    // InkWell(
+                    //     onTap: () {},
+                    //     child: ProductItem(
+                    //       image:
+                    //           "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                    //       price: 150000,
+                    //       name: "Kaos 1",
+                    //     )),
+                    // InkWell(
+                    //   onTap: () {},
+                    //   child: ProductItem(
+                    //     image:
+                    //         "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                    //     price: 115000,
+                    //     name: "Kaos 2",
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -226,24 +260,24 @@ class _HomeState extends State<Home> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    InkWell(
-                      onTap: () {},
-                      child: ProductItem(
-                        image:
-                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                        price: 150000,
-                        name: "Kaos 3",
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: ProductItem(
-                        image:
-                            "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                        price: 130000,
-                        name: "Kaos 4",
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {},
+                    //   child: ProductItem(
+                    //     image:
+                    //         "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                    //     price: 150000,
+                    //     name: "Kaos 3",
+                    //   ),
+                    // ),
+                    // InkWell(
+                    //   onTap: () {},
+                    //   child: ProductItem(
+                    //     image:
+                    //         "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
+                    //     price: 130000,
+                    //     name: "Kaos 4",
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

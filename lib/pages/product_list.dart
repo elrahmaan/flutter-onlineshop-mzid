@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/widgets/product_item.dart';
 
-class ProductList extends StatefulWidget {
-  @override
-  _ProductListState createState() => _ProductListState();
-}
+class ProductList extends StatelessWidget {
+  final String category;
+  ProductList({this.category});
 
-class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    //mereferensikan untuk memanggil collection data "produk"
+    CollectionReference products = firestore.collection("products");
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -20,7 +25,13 @@ class _ProductListState extends State<ProductList> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => Home(),
+              ),
+            );
+          },
         ),
         actions: <Widget>[
           IconButton(
@@ -54,76 +65,44 @@ class _ProductListState extends State<ProductList> {
           ),
         ],
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  "Category",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          InkWell(
-                              onTap: () {},
-                              child: ProductItem(
-                                image:
-                                    "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                                price: 150000,
-                                name: "Kaos 1",
-                              )),
-                          InkWell(
-                            onTap: () {},
-                            child: ProductItem(
-                              image:
-                                  "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                              price: 150000,
-                              name: "Kaos 1",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          InkWell(
-                              onTap: () {},
-                              child: ProductItem(
-                                image:
-                                    "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                                price: 150000,
-                                name: "Kaos 1",
-                              )),
-                          InkWell(
-                            onTap: () {},
-                            child: ProductItem(
-                              image:
-                                  "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg",
-                              price: 150000,
-                              name: "Kaos 1",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      body: Container(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        child: ListView(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                category,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-        ],
+            Container(
+              height: MediaQuery.of(context).size.height,
+              child: FutureBuilder<QuerySnapshot>(
+                //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
+                future: products.where('category', isEqualTo: category).get(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.72,
+                      padding: const EdgeInsets.all(10),
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      scrollDirection: Axis.vertical,
+                      children: snapshot.data.docs
+                          .map((item) => ProductItem(
+                              item['image'], item['name'], item['price']))
+                          .toList(),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
