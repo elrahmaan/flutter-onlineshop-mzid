@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:online_shop/pages/cart.dart';
+import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
+import 'package:online_shop/services/authentication.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -74,15 +76,14 @@ class _HomeState extends State<Home> {
         children: [
           UserAccountsDrawerHeader(
             accountName:
-                Text("MZID User", style: TextStyle(color: Colors.black)),
+                Text(nameGoogle, style: TextStyle(color: Colors.black)),
             currentAccountPicture: CircleAvatar(
               radius: 25,
-              backgroundImage: NetworkImage(
-                  "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"),
+              backgroundImage: NetworkImage(imageUrl),
             ),
             decoration: BoxDecoration(color: Color(0xfff2f2f2)),
             accountEmail: Text(
-              "user@mzid.com",
+              emailGoogle,
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -113,7 +114,13 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('Logout'),
             leading: Icon(Icons.exit_to_app),
-            onTap: () {},
+            onTap: () {
+              signOutGoogle();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) {
+                return LoginPage();
+              }), ModalRoute.withName('/'));
+            },
           ),
         ],
       ),
