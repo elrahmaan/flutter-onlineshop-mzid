@@ -1,26 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:online_shop/pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:online_shop/services/authentication.dart';
 
 class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
 
+String email;
+String password;
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class _SignUpState extends State<SignUp> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
+  // TextEditingController addressController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String error = "";
   bool passwordVisible = false;
+  // bool isMale = true;
+  // bool isLoading = false;
+
+  void validation() async {
+    await Firebase.initializeApp();
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      print(result.user.uid);
+    } on PlatformException catch (e) {
+      print(e.message.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: _scaffoldKey,
       autovalidate: true,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -187,6 +212,9 @@ class _SignUpState extends State<SignUp> {
           SizedBox(
             height: 16,
           ),
+          SizedBox(
+            height: 16,
+          ),
           TextFormField(
             controller: phoneNoController,
             validator: (value) {
@@ -249,10 +277,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
+                validation();
               }
               // await AuthServices.signUp(
               //         emailController.text, passwordController.text)
@@ -309,17 +334,17 @@ class _SignUpState extends State<SignUp> {
               ),
               IconButton(
                 onPressed: () {
-                  // signInWithGoogle().then((result) {
-                  //   if (result != null) {
-                  //     Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //         builder: (context) {
-                  //           return Profile_Screen();
-                  //         },
-                  //       ),
-                  //     );
-                  //   }
-                  // });
+                  signInWithGoogle().then((result) {
+                    if (result != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Home();
+                          },
+                        ),
+                      );
+                    }
+                  });
                 },
                 icon: Icon(
                   Entypo.google__with_circle,
