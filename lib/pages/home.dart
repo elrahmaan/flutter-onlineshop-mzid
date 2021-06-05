@@ -22,22 +22,18 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         // elevation: 0.0,
         backgroundColor: Colors.grey[100],
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
-        ),
         actions: [
+          IconButton(icon: Icon(Icons.notifications_none), onPressed: () {}),
           IconButton(
-              icon: Icon(Icons.notifications_none, color: Colors.black),
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(Icons.shopping_cart, color: Colors.black),
+              icon: Icon(Icons.shopping_cart),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => Cart()));
               }),
         ],
+        iconTheme: IconThemeData(color: Colors.black),
       ),
+      drawer: _drawer(),
       body: ListView(
         children: <Widget>[
           _carouselImage(),
@@ -66,6 +62,58 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_sharp, color: Colors.black),
             label: 'User',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _drawer() {
+    return Drawer(
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            accountName:
+                Text("MZID User", style: TextStyle(color: Colors.black)),
+            currentAccountPicture: CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage(
+                  "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"),
+            ),
+            decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+            accountEmail: Text(
+              "user@mzid.com",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          ListTile(
+            title: Text('Home'),
+            leading: Icon(Icons.home),
+            onTap: () {
+              setState(() {});
+            },
+          ),
+          ListTile(
+            title: Text('Cart'),
+            leading: Icon(Icons.shopping_cart),
+            onTap: () {
+              setState(() {});
+            },
+          ),
+          ListTile(
+            title: Text('Orders'),
+            leading: Icon(Icons.payments),
+            onTap: () {
+              setState(() {});
+            },
+          ),
+          Divider(
+            thickness: 2,
+          ),
+          ListTile(
+            title: Text('Logout'),
+            leading: Icon(Icons.exit_to_app),
+            onTap: () {},
           ),
         ],
       ),
