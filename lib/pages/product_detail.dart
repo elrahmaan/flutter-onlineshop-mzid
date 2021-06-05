@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetail extends StatefulWidget {
+  final String image;
+  final String name;
+  final int price;
+  final String desc;
+
+  ProductDetail({this.image, this.name, this.price, this.desc});
+
   @override
   _ProductDetailState createState() => _ProductDetailState();
 }
@@ -21,7 +29,9 @@ class _ProductDetailState extends State<ProductDetail> {
             Icons.arrow_back,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -104,8 +114,9 @@ class _ProductDetailState extends State<ProductDetail> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(
-                      "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
+                  image: NetworkImage(widget.image),
+                  // image: NetworkImage(
+                  //     "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
                 ),
               ),
             ),
@@ -116,6 +127,7 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   Widget _productNameAndPrice() {
+    var formatNumber = NumberFormat("#,###");
     return Container(
       height: 70,
       child: Row(
@@ -124,12 +136,16 @@ class _ProductDetailState extends State<ProductDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Kaos Oblong",
-                  style: TextStyle(
-                    fontSize: 23,
-                  )),
               Text(
-                "IDR 100.000",
+                widget.name,
+                // "Kaos Oblong",
+                style: TextStyle(
+                  fontSize: 23,
+                ),
+              ),
+              Text(
+                // "IDR 100.000",
+                formatNumber.format(widget.price).toString() + " IDR",
                 style: TextStyle(
                     color: Color(0xFF1C1C1C),
                     fontSize: 18,
@@ -150,7 +166,7 @@ class _ProductDetailState extends State<ProductDetail> {
           height: 30,
         ),
         Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+          widget.desc,
           style: TextStyle(
             fontSize: 16,
           ),
