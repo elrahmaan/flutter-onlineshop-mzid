@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:online_shop/pages/cart.dart';
@@ -75,15 +77,14 @@ class _HomeState extends State<Home> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName:
-                Text(nameGoogle, style: TextStyle(color: Colors.black)),
+            accountName: Text(name, style: TextStyle(color: Colors.black)),
             currentAccountPicture: CircleAvatar(
               radius: 25,
               backgroundImage: NetworkImage(imageUrl),
             ),
             decoration: BoxDecoration(color: Color(0xfff2f2f2)),
             accountEmail: Text(
-              emailGoogle,
+              email,
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -115,7 +116,7 @@ class _HomeState extends State<Home> {
             title: Text('Logout'),
             leading: Icon(Icons.exit_to_app),
             onTap: () {
-              signOutGoogle();
+              emailAccount == true ? signOutEmailAccount() : signOutGoogle();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) {
                 return LoginPage();

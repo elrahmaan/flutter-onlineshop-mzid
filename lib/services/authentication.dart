@@ -1,14 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/material.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
-String nameGoogle;
-String emailGoogle;
+
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+CollectionReference users = firestore.collection("users");
+User currentUser = FirebaseAuth.instance.currentUser;
+String name;
+String email;
 String imageUrl;
+String phone;
 String errorMessageRegister;
 String errorMessageLogin;
+bool emailAccount;
 
 Future<String> signInWithGoogle() async {
   await Firebase.initializeApp();
@@ -27,21 +36,119 @@ Future<String> signInWithGoogle() async {
     assert(user.email != null);
     assert(user.displayName != null);
     assert(user.photoURL != null);
-    nameGoogle = user.displayName;
-    emailGoogle = user.email;
+    // assert(user.phoneNumber != null);
+    name = user.displayName;
+    email = user.email;
     imageUrl = user.photoURL;
+    phone = user.phoneNumber;
+
     // Only taking the first part of the name, i.e., First Name
-    if (nameGoogle.contains(" ")) {
-      nameGoogle = nameGoogle.substring(0, nameGoogle.indexOf(" "));
-    }
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
     final User currentUser = _auth.currentUser;
     assert(user.uid == currentUser.uid);
+
+    CollectionReference users = firestore.collection("users");
+
+    /**
+     * Memfilter userId jika value userId sudah ada pada collection (pernah ditambahkan),
+     * maka tidak perlu ditambahkan lagi
+     */
+    users.add({
+      'username': name,
+      'userId': _auth.currentUser.uid,
+      'userEmail': email,
+      'userNumber': phone,
+    });
     print('signInWithGoogle succeeded: $user');
     return '$user';
   }
   return null;
+}
+
+Future<void> signUpWithEmail(
+    String _username, String _email, String _password, String _phone) async {
+  UserCredential result;
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  try {
+    UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+        email: _email, password: _password);
+    User user = authResult.user;
+    // name = _username;
+    // email = _email;
+    imageUrl =
+        "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
+    emailAccount = true;
+
+    //untuk menambahkan data user pada collection firestore
+    users.add({
+      'username': _username,
+      'userId': _auth.currentUser.uid,
+      'userEmail': _email,
+      // "userAddress": address.text,
+      'userNumber': _phone,
+    });
+    return user;
+
+    // print(result);
+  } on PlatformException catch (error) {
+    var message = "Please Check Your Internet Connection ";
+    if (error.message != null) {
+      message = error.message;
+    }
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(message.toString()),
+        duration: Duration(milliseconds: 600),
+        // backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.blue));
+  } catch (error) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(error.toString()),
+        duration: Duration(milliseconds: 600),
+        // backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.blue));
+
+    print(error);
+  }
+}
+
+Future<User> signInWithEmailAndPassword(String _email, String _password) async {
+  await Firebase.initializeApp();
+  try {
+    UserCredential authResult = await _auth.signInWithEmailAndPassword(
+        email: _email, password: _password);
+
+    //QuerySnapshot yang digunakan untuk mengambil data dari collection "users"
+    QuerySnapshot userSnapShot =
+        await FirebaseFirestore.instance.collection("users").get();
+
+    //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
+    userSnapShot.docs.forEach(
+      (data) {
+        //ketika data sesi uid yang digunakan bernilai sama dengan nilai dari field userId dari collection "users"
+        if (currentUser.uid == data["userId"]) {
+          //maka variabel nama bernilai username dimana yang userId hasil dari seleksi
+          name = data["username"];
+        }
+      },
+    );
+    User user = authResult.user;
+    email = _email;
+    imageUrl =
+        "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
+
+    return user;
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
+
+Future<void> signOutEmailAccount() async {
+  await _auth.signOut();
+  print("User with Email Account Signed Out");
 }
 
 Future<void> signOutGoogle() async {

@@ -17,28 +17,88 @@ String email;
 String password;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+String p =
+    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+RegExp regExp = new RegExp(p);
+
 class _SignUpState extends State<SignUp> {
-  TextEditingController userNameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController phoneNoController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   // TextEditingController addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String error = "";
   bool passwordVisible = false;
+
   // bool isMale = true;
   // bool isLoading = false;
 
   void validation() async {
-    await Firebase.initializeApp();
-    try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      print(result.user.uid);
-    } on PlatformException catch (e) {
-      print(e.message.toString());
+    String username = usernameController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+    String phone = phoneController.text;
+    if (username.isEmpty && email.isEmpty && password.isEmpty && phone.isEmpty
+        // && address.text.isEmpty
+        ) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("All Flied Are Empty"),
+        ),
+      );
+    } else if (username.length < 6) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Name Must Be 6 "),
+        ),
+      );
+    } else if (email.isEmpty) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Email Is Empty"),
+        ),
+      );
+    } else if (!regExp.hasMatch(email)) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Please Try Vaild Email"),
+        ),
+      );
+    } else if (password.isEmpty) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Password Is Empty"),
+        ),
+      );
+    } else if (password.length < 8) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Password  Is Too Short"),
+        ),
+      );
+    } else if (phone.length < 11 || phone.length > 12) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Phone Number Must Be 11 "),
+        ),
+      );
+    }
+    // else if (address.text.isEmpty) {
+    //   _scaffoldKey.currentState.showSnackBar(
+    //     SnackBar(
+    //       content: Text("Adress Is Empty "),
+    //     ),
+    //   );
+    // }
+    else {
+      signUpWithEmail(username, email, password, phone);
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+      setState(() {});
     }
   }
 
@@ -73,7 +133,7 @@ class _SignUpState extends State<SignUp> {
             height: 16,
           ),
           TextFormField(
-            controller: userNameController,
+            controller: usernameController,
             validator: (value) {
               if (value == "") {
                 return "Please enter username";
@@ -216,7 +276,7 @@ class _SignUpState extends State<SignUp> {
             height: 16,
           ),
           TextFormField(
-            controller: phoneNoController,
+            controller: phoneController,
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter phone number';

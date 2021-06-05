@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
+import 'package:online_shop/services/authentication.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -170,10 +171,23 @@ class _LoginState extends State<Login> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
+                signInWithEmailAndPassword(
+                        emailController.text, passwordController.text)
+                    .then((result) {
+                  if (result != null) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Home();
+                        },
+                      ),
+                    );
+                  }
+                });
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Home()),
+                // );
               },
               // onPressed: () async {
               //   await AuthServices.signIn(
