@@ -16,6 +16,7 @@ String email;
 String imageUrl;
 String phone;
 String userId;
+String address;
 String errorMessageRegister;
 String errorMessageLogin;
 bool emailAccount;
@@ -67,8 +68,8 @@ Future<String> signInWithGoogle() async {
   return null;
 }
 
-Future<void> signUpWithEmail(
-    String _username, String _email, String _password, String _phone) async {
+Future<void> signUpWithEmail(String _username, String _email, String _password,
+    String _phone, String _address) async {
   await Firebase.initializeApp();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -82,13 +83,14 @@ Future<void> signUpWithEmail(
         "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
     emailAccount = true;
     userId = user.uid;
+    address = _address;
 
     //untuk menambahkan data user pada collection firestore
     users.add({
       'username': _username,
       'userId': _auth.currentUser.uid,
       'userEmail': _email,
-      // "userA1ddress": address.text,
+      'userAddress': _address,
       'userNumber': _phone,
     });
     return user;

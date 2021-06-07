@@ -6,6 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:online_shop/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/services/authentication.dart';
 
 class SignUp extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  // TextEditingController addressController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -42,9 +43,12 @@ class _SignUpState extends State<SignUp> {
     String email = emailController.text;
     String password = passwordController.text;
     String phone = phoneController.text;
-    if (username.isEmpty && email.isEmpty && password.isEmpty && phone.isEmpty
-        // && address.text.isEmpty
-        ) {
+    String address = addressController.text;
+    if (username.isEmpty &&
+        email.isEmpty &&
+        password.isEmpty &&
+        phone.isEmpty &&
+        address.isEmpty) {
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
           content: Text("All Flied Are Empty"),
@@ -86,18 +90,16 @@ class _SignUpState extends State<SignUp> {
           content: Text("Phone Number Must Be 11 "),
         ),
       );
-    }
-    // else if (address.text.isEmpty) {
-    //   _scaffoldKey.currentState.showSnackBar(
-    //     SnackBar(
-    //       content: Text("Adress Is Empty "),
-    //     ),
-    //   );
-    // }
-    else {
-      signUpWithEmail(username, email, password, phone);
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+    } else if (address.isEmpty) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text("Adress Is Empty "),
+        ),
+      );
+    } else {
+      signUpWithEmail(username, email, password, phone, address);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()));
       setState(() {});
     }
   }
@@ -272,9 +274,6 @@ class _SignUpState extends State<SignUp> {
           SizedBox(
             height: 16,
           ),
-          SizedBox(
-            height: 16,
-          ),
           TextFormField(
             controller: phoneController,
             validator: (value) {
@@ -315,6 +314,47 @@ class _SignUpState extends State<SignUp> {
             onChanged: (value) {},
           ),
           SizedBox(
+            height: 16,
+          ),
+          TextFormField(
+            controller: addressController,
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter your address';
+              }
+            },
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+                color: Color(0xFF45D1FD),
+                fontWeight: FontWeight.bold,
+                fontSize: 16),
+            decoration: InputDecoration(
+                hintText: "Address",
+                hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF45D1FD),
+                  fontWeight: FontWeight.bold,
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    )),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(color: Color(0xFF45D1FD), width: 2),
+                ),
+                prefixIcon: Icon(Icons.location_pin, color: Color(0xFF45D1FD)),
+                filled: true,
+                fillColor: Color(0xFF1B5163),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 0,
+                )),
+            onChanged: (value) {},
+          ),
+          SizedBox(
             height: 24,
           ),
           // Row(
@@ -338,26 +378,7 @@ class _SignUpState extends State<SignUp> {
               ),
               onPressed: () {
                 validation();
-              }
-              // await AuthServices.signUp(
-              //         emailController.text, passwordController.text)
-              //     .then((result) {
-              //   if (result != null) {
-              //     String email = result.email;
-              //     String name = "User";
-              //     String image =
-              //         "https://pmbak.aknpacitan.ac.id/images/user.png";
-              //     Navigator.of(context).push(
-              //       MaterialPageRoute(
-              //         builder: (context) {
-              //           return Profile_Screen(
-              //               email: email, name: name, image: image);
-              //         },
-              //       ),
-              //     );
-              //   }
-              // });
-              ,
+              },
               color: Color(0xFF45D1FD),
               elevation: 9.0,
               splashColor: Colors.blue[200],
@@ -376,7 +397,6 @@ class _SignUpState extends State<SignUp> {
           SizedBox(
             height: 24,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
