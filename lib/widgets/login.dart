@@ -16,6 +16,12 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   String error = "";
   bool passwordVisible = false;
+  bool isLoading = false;
+  void _loadingbutton() {
+    setState(() {
+      isLoading = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,69 +167,55 @@ class _LoginState extends State<Login> {
           //             fontWeight: FontWeight.bold)),
           //   ],
           // ),
-          Container(
-            width: double.infinity,
-            height: 50,
-            child: RaisedButton(
-              shape: new RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              onPressed: () {
-                signInWithEmailAndPassword(
-                        emailController.text, passwordController.text)
-                    .then((result) {
-                  if (result != null) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return Home();
-                        },
+
+          isLoading == false
+              ? Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: RaisedButton(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
                       ),
-                    );
-                  }
-                });
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Home()),
-                // );
-              },
-              // onPressed: () async {
-              //   await AuthServices.signIn(
-              //           emailController.text, passwordController.text)
-              //       .then((result) {
-              //     if (result != null) {
-              //       String email = result.email;
-              //       String name = "User";
-              //       String image =
-              //           "https://pmbak.aknpacitan.ac.id/images/user.png";
-              //       Navigator.of(context).push(
-              //         MaterialPageRoute(
-              //           builder: (context) {
-              //             return Profile_Screen(
-              //                 email: email, name: name, image: image);
-              //           },
-              //         ),
-              //       );
-              //     }
-              //   });
-              // },
-              color: Color(0xFF1C1C1C),
-              elevation: 9.0,
-              splashColor: Colors.blue[200],
-              child: Center(
-                child: Text(
-                  "LOGIN",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF45D1FD),
+                    ),
+                    onPressed: () {
+                      _loadingbutton();
+                      signInWithEmailAndPassword(
+                              emailController.text, passwordController.text)
+                          .then((result) {
+                        if (result != null) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return Home();
+                              },
+                            ),
+                          );
+                        }
+                      });
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Home()),
+                      // );
+                    },
+                    color: Color(0xFF1C1C1C),
+                    elevation: 9.0,
+                    splashColor: Colors.blue[200],
+                    child: Center(
+                      child: Text(
+                        "LOGIN",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF45D1FD),
+                        ),
+                      ),
+                    ),
                   ),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-            ),
-          )
         ],
       ),
     );
