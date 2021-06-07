@@ -34,9 +34,12 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String error = "";
   bool passwordVisible = false;
-
-  // bool isMale = true;
-  // bool isLoading = false;
+  bool isLoading = false;
+  void _loadingbutton() {
+    setState(() {
+      isLoading = true;
+    });
+  }
 
   void validation() async {
     String username = usernameController.text;
@@ -367,33 +370,37 @@ class _SignUpState extends State<SignUp> {
           //             fontWeight: FontWeight.bold)),
           //   ],
           // ),
-          Container(
-            width: double.infinity,
-            height: 50,
-            child: RaisedButton(
-              shape: new RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              onPressed: () {
-                validation();
-              },
-              color: Color(0xFF45D1FD),
-              elevation: 9.0,
-              splashColor: Colors.blue[200],
-              child: Center(
-                child: Text(
-                  "SIGN UP",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1C1C1C),
+          isLoading == false
+              ? Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: RaisedButton(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
+                    onPressed: () {
+                      validation();
+                    },
+                    color: Color(0xFF45D1FD),
+                    elevation: 9.0,
+                    splashColor: Colors.blue[200],
+                    child: Center(
+                      child: Text(
+                        "SIGN UP",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1C1C1C),
+                        ),
+                      ),
+                    ),
                   ),
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ),
-            ),
-          ),
           SizedBox(
             height: 24,
           ),
