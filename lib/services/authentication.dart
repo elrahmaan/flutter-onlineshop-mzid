@@ -10,11 +10,12 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 CollectionReference users = firestore.collection("users");
-User currentUser = FirebaseAuth.instance.currentUser;
+
 String name;
 String email;
 String imageUrl;
 String phone;
+String userId;
 String errorMessageRegister;
 String errorMessageLogin;
 bool emailAccount;
@@ -49,7 +50,7 @@ Future<String> signInWithGoogle() async {
     assert(user.uid == currentUser.uid);
 
     CollectionReference users = firestore.collection("users");
-
+    userId = user.uid;
     /**
      * Memfilter userId jika value userId sudah ada pada collection (pernah ditambahkan),
      * maka tidak perlu ditambahkan lagi
@@ -68,26 +69,26 @@ Future<String> signInWithGoogle() async {
 
 Future<void> signUpWithEmail(
     String _username, String _email, String _password, String _phone) async {
-  UserCredential result;
-
+  await Firebase.initializeApp();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   try {
     UserCredential authResult = await _auth.createUserWithEmailAndPassword(
         email: _email, password: _password);
     User user = authResult.user;
-    // name = _username;
-    // email = _email;
+    name = _username;
+    email = _email;
     imageUrl =
         "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
     emailAccount = true;
+    userId = user.uid;
 
     //untuk menambahkan data user pada collection firestore
     users.add({
       'username': _username,
       'userId': _auth.currentUser.uid,
       'userEmail': _email,
-      // "userAddress": address.text,
+      // "userA1ddress": address.text,
       'userNumber': _phone,
     });
     return user;
@@ -116,9 +117,11 @@ Future<void> signUpWithEmail(
 
 Future<User> signInWithEmailAndPassword(String _email, String _password) async {
   await Firebase.initializeApp();
+
   try {
     UserCredential authResult = await _auth.signInWithEmailAndPassword(
         email: _email, password: _password);
+    final User user = authResult.user;
 
     //QuerySnapshot yang digunakan untuk mengambil data dari collection "users"
     QuerySnapshot userSnapShot =
@@ -128,17 +131,16 @@ Future<User> signInWithEmailAndPassword(String _email, String _password) async {
     userSnapShot.docs.forEach(
       (data) {
         //ketika data sesi uid yang digunakan bernilai sama dengan nilai dari field userId dari collection "users"
-        if (currentUser.uid == data["userId"]) {
+        if (user.uid == data["userId"]) {
           //maka variabel nama bernilai username dimana yang userId hasil dari seleksi
           name = data["username"];
         }
       },
     );
-    User user = authResult.user;
     email = _email;
     imageUrl =
         "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
-
+    userId = user.uid;
     return user;
   } catch (e) {
     print(e.toString());
