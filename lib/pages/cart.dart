@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/cart_item.dart';
 
 class Cart extends StatefulWidget {
@@ -8,7 +10,14 @@ class Cart extends StatefulWidget {
   _CartState createState() => _CartState();
 }
 
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+
 class _CartState extends State<Cart> {
+  CollectionReference carts = firestore
+      .collection("carts")
+      .doc(userId)
+      .collection("Order " + levelOrder.toString());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,18 +67,32 @@ class _CartState extends State<Cart> {
         children: <Widget>[
           Expanded(
             flex: 3,
-            child: Container(
-              child: ListView(children: [
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-                CartItem(),
-              ]),
+            child: ListView(
+              children: [
+                Container(
+                  child: FutureBuilder<QuerySnapshot>(
+                    //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
+                    future: carts.get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data.docs
+                              .map((item) => CartItem(
+                                    item['productImg'],
+                                    item['productName'],
+                                    item['productPrice'],
+                                    item['productId'],
+                                    item['productQty'],
+                                  ))
+                              .toList(),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
           Container(

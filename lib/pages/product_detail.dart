@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:online_shop/services/authentication.dart';
+import 'package:online_shop/services/databases.dart';
 
 class ProductDetail extends StatefulWidget {
+  final String id;
   final String image;
   final String name;
   final int price;
   final String desc;
 
-  ProductDetail({this.image, this.name, this.price, this.desc});
+  ProductDetail({this.id, this.image, this.name, this.price, this.desc});
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -447,7 +450,10 @@ class _ProductDetailState extends State<ProductDetail> {
             style: TextStyle(color: Colors.white),
           ),
           color: Color(0xFF1C1C1C),
-          onPressed: () {},
+          onPressed: () async {
+            await Database.addProductToCart(widget.id, userId, widget.name,
+                widget.price, widget.image, quantity, levelOrder);
+          },
         ),
       ),
     );

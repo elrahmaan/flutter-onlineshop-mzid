@@ -3,12 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:online_shop/pages/product_detail.dart';
 
 class ProductItem extends StatelessWidget {
+  final String id;
   final String image;
   final String name;
   final int price;
   final String desc;
 
-  ProductItem(this.image, this.name, this.price, this.desc);
+  ProductItem(this.id, this.image, this.name, this.price, this.desc);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class ProductItem extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ProductDetail(
+              id: id,
               image: image,
               name: name,
               price: price,

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CartItem extends StatelessWidget {
-  // const CartItem({ Key? key }) : super(key: key);
+  final String image;
+  final String name;
+  final int price;
+  final String productId;
+  final int quantity;
+
+  const CartItem(
+      this.image, this.name, this.price, this.productId, this.quantity);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,8 @@ class CartItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.network(
-              "https://purepng.com/public/uploads/large/wrist-watch-ogx.png",
+              // "https://purepng.com/public/uploads/large/wrist-watch-ogx.png",
+              image,
               width: 80,
             ),
           ),
@@ -33,7 +41,8 @@ class CartItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(left: 14),
                   child: Text(
-                    "Product",
+                    // "Product",
+                    name,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
@@ -49,7 +58,7 @@ class CartItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "1",
+                        quantity.toString(),
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -67,7 +76,8 @@ class CartItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(14),
             child: Text(
-              "100.000 IDR",
+              // "100.000 IDR",
+              price.toString(),
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

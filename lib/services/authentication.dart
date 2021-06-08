@@ -17,6 +17,8 @@ String imageUrl;
 String phone;
 String userId;
 String address;
+int levelOrder;
+
 String errorMessageRegister;
 String errorMessageLogin;
 bool emailAccount;
@@ -61,6 +63,7 @@ Future<String> signInWithGoogle() async {
       'userId': _auth.currentUser.uid,
       'userEmail': email,
       'userNumber': phone,
+      'levelOrder': 1
     });
     print('signInWithGoogle succeeded: $user');
     return '$user';
@@ -84,6 +87,7 @@ Future<void> signUpWithEmail(String _username, String _email, String _password,
     emailAccount = true;
     userId = user.uid;
     address = _address;
+    levelOrder = 1;
 
     //untuk menambahkan data user pada collection firestore
     users.add({
@@ -92,6 +96,7 @@ Future<void> signUpWithEmail(String _username, String _email, String _password,
       'userEmail': _email,
       'userAddress': _address,
       'userNumber': _phone,
+      'levelOrder': 1
     });
     return user;
 
@@ -134,8 +139,9 @@ Future<User> signInWithEmailAndPassword(String _email, String _password) async {
       (data) {
         //ketika data sesi uid yang digunakan bernilai sama dengan nilai dari field userId dari collection "users"
         if (user.uid == data["userId"]) {
-          //maka variabel nama bernilai username dimana yang userId hasil dari seleksi
+          //maka variabel nama dan levelOrder bernilai username dan levelOrder dimana yang userId hasil dari seleksi
           name = data["username"];
+          levelOrder = data["levelOrder"];
         }
       },
     );
