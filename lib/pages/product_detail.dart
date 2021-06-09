@@ -451,8 +451,8 @@ class _ProductDetailState extends State<ProductDetail> {
           ),
           color: Color(0xFF1C1C1C),
           onPressed: () async {
-            await Database.addProductToCart(widget.id, userId, widget.name,
-                widget.price, widget.image, quantity, levelOrder);
+            await addProductToCart(widget.id, userId, widget.name, widget.price,
+                widget.image, quantity, levelOrder);
           },
         ),
       ),

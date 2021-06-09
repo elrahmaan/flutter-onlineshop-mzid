@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/login_page.dart';
+import 'package:online_shop/pages/orders_page.dart';
 import 'package:online_shop/pages/product_list.dart';
+import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
 import 'package:online_shop/services/authentication.dart';
@@ -30,9 +32,10 @@ class _HomeState extends State<Home> {
           IconButton(icon: Icon(Icons.notifications_none), onPressed: () {}),
           IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Cart()));
+              onPressed: () async {
+                await setTotalOrder();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => Cart(total: totalOrder)));
               }),
         ],
         iconTheme: IconThemeData(color: Colors.black),
@@ -106,7 +109,10 @@ class _HomeState extends State<Home> {
             title: Text('Orders'),
             leading: Icon(Icons.payments),
             onTap: () {
-              setState(() {});
+              setState(() {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => OrdersPage()));
+              });
             },
           ),
           Divider(
@@ -116,7 +122,7 @@ class _HomeState extends State<Home> {
             title: Text('Logout'),
             leading: Icon(Icons.exit_to_app),
             onTap: () {
-              emailAccount == true ? signOutEmailAccount() : signOutGoogle();
+              signOutGoogle();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) {
                 return LoginPage();
@@ -217,7 +223,7 @@ class _HomeState extends State<Home> {
                   },
                   child: CategoryItem(
                     image: 'https://img.icons8.com/ios/2x/apple-watch.png',
-                    name: "Accessoris",
+                    name: "Accessories",
                   ),
                 ),
 
