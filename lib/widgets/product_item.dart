@@ -3,13 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:online_shop/pages/product_detail.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String image;
-  final String name;
-  final int price;
-  final String desc;
+  final String productId;
+  final String productImg;
+  final String productName;
+  final int productPrice;
+  final String productDesc;
 
-  ProductItem(this.id, this.image, this.name, this.price, this.desc);
+  ProductItem(this.productId, this.productImg, this.productName,
+      this.productPrice, this.productDesc);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,11 @@ class ProductItem extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => ProductDetail(
-              id: id,
-              image: image,
-              name: name,
-              price: price,
-              desc: desc,
+              productId: productId,
+              productImg: productImg,
+              productName: productName,
+              productPrice: productPrice,
+              productDesc: productDesc,
             ),
           ),
         );
@@ -49,7 +50,7 @@ class ProductItem extends StatelessWidget {
                     topRight: Radius.circular(15),
                   ),
                   child: Image.network(
-                    image,
+                    productImg,
                     width: double.infinity,
                     height: 200,
                   )),
@@ -61,7 +62,7 @@ class ProductItem extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(left: 2, right: 2),
                 child: Text(
-                  name,
+                  productName,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -77,7 +78,7 @@ class ProductItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    formatNumber.format(price).toString() + " IDR",
+                    formatNumber.format(productPrice).toString() + " IDR",
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,

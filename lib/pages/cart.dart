@@ -6,10 +6,6 @@ import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
 
 class Cart extends StatefulWidget {
-  // const Cart({ Key? key }) : super(key: key);
-  final total;
-
-  Cart({this.total});
   @override
   _CartState createState() => _CartState();
 }
@@ -45,24 +41,36 @@ class _CartState extends State<Cart> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 70,
-        width: 100,
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        padding: EdgeInsets.only(bottom: 15),
-        child: Column(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.5),
+            blurRadius: 7,
+          )
+        ]),
+        child: Row(
           children: [
-            Container(
-              height: 50,
+            Expanded(
+              child: ListTile(
+                title: Text("Total: "),
+                subtitle: Text(
+                  totalOrder.toString() + " IDR",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18),
+                ),
+              ),
+            ),
+            Expanded(
               child: Container(
-                height: 45,
-                width: double.infinity,
-                child: RaisedButton(
+                height: 50,
+                child: MaterialButton(
+                  onPressed: () {},
                   child: Text(
-                    "Checkout (" + widget.total.toString() + " IDR)",
+                    "Checkout",
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Color(0xFF1C1C1C),
-                  onPressed: () {},
                 ),
               ),
             ),
@@ -78,9 +86,9 @@ class _CartState extends State<Cart> {
               child: ListView(
                 children: [
                   Container(
-                    child: FutureBuilder<QuerySnapshot>(
+                    child: StreamBuilder<QuerySnapshot>(
                       //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
-                      future: carts.get(),
+                      stream: carts.snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Column(
@@ -103,66 +111,6 @@ class _CartState extends State<Cart> {
                 ],
               ),
             ),
-            // Container(
-            //   height: 120,
-            //   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Column(
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //         children: [
-            //           Text(
-            //             "Subtotal",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //             ),
-            //           ),
-            //           Text(
-            //             "Discount",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //             ),
-            //           ),
-            //           SizedBox(
-            //             height: 2,
-            //           ),
-            //           Text(
-            //             "Total",
-            //             style: TextStyle(
-            //                 fontSize: 18, fontWeight: FontWeight.bold),
-            //           ),
-            //         ],
-            //       ),
-            //       Column(
-            //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //         children: [
-            //           Text(
-            //             "100,000 IDR",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //             ),
-            //           ),
-            //           Text(
-            //             "50%",
-            //             style: TextStyle(
-            //               fontSize: 18,
-            //             ),
-            //           ),
-            //           SizedBox(
-            //             height: 2,
-            //           ),
-            //           Text(
-            //             totalCart.toString(),
-            //             style: TextStyle(
-            //                 fontSize: 18, fontWeight: FontWeight.bold),
-            //           ),
-            //         ],
-            //       )
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),

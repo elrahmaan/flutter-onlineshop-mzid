@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 
 class ProductDetail extends StatefulWidget {
-  final String id;
-  final String image;
-  final String name;
-  final int price;
-  final String desc;
+  final String productId;
+  final String productImg;
+  final String productName;
+  final int productPrice;
+  final String productDesc;
 
-  ProductDetail({this.id, this.image, this.name, this.price, this.desc});
+  ProductDetail(
+      {this.productId,
+      this.productImg,
+      this.productName,
+      this.productPrice,
+      this.productDesc});
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  List<bool> sizeSelect = [true, false, false, false, false];
+  String productSize;
+
   int quantity = 1;
+
+  void _showScaffold(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(message),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Detail", style: TextStyle(color: Colors.black)),
@@ -82,12 +98,6 @@ class _ProductDetailState extends State<ProductDetail> {
                     height: 15,
                   ),
 
-                  //COLOR SELECTION
-                  _chooseColor(),
-                  SizedBox(
-                    height: 15,
-                  ),
-
                   //SET QUANTITY
                   _setQuantity(),
                   SizedBox(
@@ -117,7 +127,7 @@ class _ProductDetailState extends State<ProductDetail> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(widget.image),
+                  image: NetworkImage(widget.productImg),
                   // image: NetworkImage(
                   //     "https://redcanoebrands.com/wp-content/uploads/2013/11/cessna-blue-tshirt-416x416.jpg"),
                 ),
@@ -140,7 +150,7 @@ class _ProductDetailState extends State<ProductDetail> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.name,
+                widget.productName,
                 // "Kaos Oblong",
                 style: TextStyle(
                   fontSize: 23,
@@ -148,7 +158,7 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               Text(
                 // "IDR 100.000",
-                formatNumber.format(widget.price).toString() + " IDR",
+                formatNumber.format(widget.productPrice).toString() + " IDR",
                 style: TextStyle(
                     color: Color(0xFF1C1C1C),
                     fontSize: 18,
@@ -169,7 +179,7 @@ class _ProductDetailState extends State<ProductDetail> {
           height: 30,
         ),
         Text(
-          widget.desc,
+          widget.productDesc,
           style: TextStyle(
             fontSize: 16,
           ),
@@ -179,9 +189,25 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
+  int indexSize = 0;
+  void setSize() {
+    setState(() {
+      if (indexSize == 0) {
+        productSize = "S";
+      } else if (indexSize == 1) {
+        productSize = "M";
+      } else if (indexSize == 2) {
+        productSize = "L";
+      } else if (indexSize == 3) {
+        productSize = "XL";
+      } else if (indexSize == 4) {
+        productSize = "XXL";
+      }
+    });
+  }
+
   Widget _chooseSize() {
     return Container(
-      // color: Colors.blue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -192,171 +218,33 @@ class _ProductDetailState extends State<ProductDetail> {
           SizedBox(
             height: 10,
           ),
-
-          //Size Item
           Container(
-            width: 350,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            width: 265,
+            child: ToggleButtons(
               children: [
-                //Size S
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    child: Text(
-                      "S",
-                    ),
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                  ),
-                ),
-
-                //Size M
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    child: Text(
-                      "M",
-                    ),
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                  ),
-                ),
-
-                //Size L
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    child: Text(
-                      "L",
-                    ),
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                  ),
-                ),
-
-                //Size XL
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    child: Text(
-                      "XL",
-                    ),
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                  ),
-                ),
-
-                //Size XXL
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    child: Text(
-                      "XXL",
-                    ),
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                  ),
-                ),
+                Text("S"),
+                Text("M"),
+                Text("L"),
+                Text("XL"),
+                Text("XXL"),
               ],
+              onPressed: (int index) {
+                setState(() {
+                  for (int idx = 0; idx < sizeSelect.length; idx++) {
+                    if (idx == index) {
+                      sizeSelect[idx] = true;
+                    } else {
+                      sizeSelect[idx] = false;
+                    }
+                  }
+                });
+                setState(() {
+                  indexSize = index;
+                });
+              },
+              isSelected: sizeSelect,
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _chooseColor() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Choose your color :",
-            style: TextStyle(fontSize: 18),
           ),
-          SizedBox(
-            height: 10,
-          ),
-
-          //Color Item
-          Container(
-            width: 350,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //Red
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    color: Colors.red[400],
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.15), width: 2)),
-                    onPressed: () {},
-                  ),
-                ),
-
-                //blue
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    color: Colors.blue[400],
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.15), width: 2)),
-                    onPressed: () {},
-                  ),
-                ),
-
-                //grey
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    color: Colors.grey[400],
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.15), width: 2)),
-                    onPressed: () {},
-                  ),
-                ),
-
-                //black
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    color: Colors.black87,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.15), width: 2)),
-                    onPressed: () {},
-                  ),
-                ),
-
-                //white
-                Container(
-                  height: 65,
-                  width: 65,
-                  child: FlatButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Colors.black.withOpacity(0.15), width: 2)),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
@@ -438,6 +326,7 @@ class _ProductDetailState extends State<ProductDetail> {
     );
   }
 
+  @override
   Widget _addToCartButton() {
     return Container(
       height: 60,
@@ -451,8 +340,16 @@ class _ProductDetailState extends State<ProductDetail> {
           ),
           color: Color(0xFF1C1C1C),
           onPressed: () async {
-            await addProductToCart(widget.id, userId, widget.name, widget.price,
-                widget.image, quantity, levelOrder);
+            setSize();
+            int productCost = widget.productPrice * quantity;
+            await addProductToCart(
+                widget.productId,
+                widget.productName,
+                widget.productImg,
+                productSize,
+                widget.productPrice,
+                quantity,
+                productCost);
           },
         ),
       ),

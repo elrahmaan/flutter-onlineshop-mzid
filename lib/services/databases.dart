@@ -5,28 +5,28 @@ int totalOrder;
 
 Future<void> addProductToCart(
     String productId,
-    String uid,
     String productName,
-    int productPrice,
     String productImg,
+    String productSize,
+    int productPrice,
     int productQty,
-    int levelOrderUser) async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  CollectionReference carts = firestore.collection("carts");
+    int productCost) async {
+  CollectionReference carts = FirebaseFirestore.instance.collection("carts");
   var itemCart = {
     'productId': productId,
-    'userId': uid,
+    'userId': userId,
     'productName': productName,
     'productPrice': productPrice,
     'productImg': productImg,
+    'productSize': productSize,
     'productQty': productQty,
-    'productStatus': "cart"
+    'productCost': productCost,
   };
 
   String orderCollection = "Order " + levelOrder.toString();
-  carts.doc(uid).collection(orderCollection).add(itemCart);
+  carts.doc(userId).collection(orderCollection).add(itemCart);
 
-  print("Product " + productId + " succesfully added to cart by " + uid);
+  print("Product " + productId + " succesfully added to cart by " + userId);
 
   /**
    * menghitung total keseluruhan dari produk yang ditambahkan ke keranjang
@@ -41,8 +41,8 @@ Future<void> addProductToCart(
     },
   );
   // totalCart = total;
-  carts.doc(uid).set({
-    "userId": uid,
+  carts.doc(userId).set({
+    "userId": userId,
     "userName": name,
     "userEmail": email,
     "currentTotalOrder": total
@@ -52,8 +52,7 @@ Future<void> addProductToCart(
 }
 
 Future<void> setTotalOrder() async {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  CollectionReference carts = firestore.collection("carts");
+  CollectionReference carts = FirebaseFirestore.instance.collection("carts");
   QuerySnapshot snapShot = await carts.where("userId", isEqualTo: userId).get();
   snapShot.docs.forEach(
     (data) {

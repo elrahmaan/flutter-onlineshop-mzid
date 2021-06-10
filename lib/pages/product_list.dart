@@ -78,9 +78,10 @@ class ProductList extends StatelessWidget {
             ),
             Container(
               height: MediaQuery.of(context).size.height,
-              child: FutureBuilder<QuerySnapshot>(
+              child: StreamBuilder<QuerySnapshot>(
                 //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
-                future: products.where('category', isEqualTo: category).get(),
+                stream:
+                    products.where('category', isEqualTo: category).snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return GridView.count(

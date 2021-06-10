@@ -34,8 +34,8 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.shopping_cart),
               onPressed: () async {
                 await setTotalOrder();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => Cart(total: totalOrder)));
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => Cart()));
               }),
         ],
         iconTheme: IconThemeData(color: Colors.black),
