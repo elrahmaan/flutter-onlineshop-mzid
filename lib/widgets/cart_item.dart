@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop/services/databases.dart';
 
-class CartItem extends StatelessWidget {
-  final String productImg;
-  final String productName;
-  final String productCategory;
-  final int productPrice;
-  final String productId;
-  final String productSize;
-  final int productQty;
-  final int productCost;
-
-  const CartItem(
+class CartItem extends StatefulWidget {
+  String productImg;
+  String productName;
+  String productCategory;
+  int productPrice;
+  String productId;
+  String productSize;
+  int productQty;
+  int productCost;
+  CartItem(
       this.productImg,
       this.productName,
       this.productCategory,
@@ -21,6 +20,11 @@ class CartItem extends StatelessWidget {
       this.productQty,
       this.productCost);
 
+  @override
+  _CartItemState createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +46,7 @@ class CartItem extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.network(
               // "https://purepng.com/public/uploads/large/wrist-watch-ogx.png",
-              productImg,
+              widget.productImg,
               width: 80,
             ),
           ),
@@ -56,7 +60,7 @@ class CartItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        productName,
+                        widget.productName,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -66,7 +70,7 @@ class CartItem extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            productCategory,
+                            widget.productCategory,
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.black,
@@ -77,7 +81,7 @@ class CartItem extends StatelessWidget {
                             width: 50,
                           ),
                           Text(
-                            "Size: " + productSize,
+                            "Size: " + widget.productSize,
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
@@ -90,7 +94,7 @@ class CartItem extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        productPrice.toString() + " IDR",
+                        widget.productPrice.toString() + " IDR",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -104,20 +108,34 @@ class CartItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                        icon: Icon(Icons.chevron_left), onPressed: () {}),
+                        icon: Icon(Icons.chevron_left),
+                        onPressed: () {
+                          setState(() {
+                            if (widget.productQty > 1) {
+                              widget.productQty--;
+                            }
+                          });
+                          updateItemCart(widget.productId, widget.productQty,
+                              widget.productPrice);
+                        }),
                     Container(
-                      // padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        productQty.toString(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          // fontWeight: FontWeight.bold,
-                        ),
+                        child: Text(
+                      widget.productQty.toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        // fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    )),
                     IconButton(
-                        icon: Icon(Icons.chevron_right), onPressed: () {}),
+                        icon: Icon(Icons.chevron_right),
+                        onPressed: () {
+                          setState(() {
+                            widget.productQty++;
+                          });
+                          updateItemCart(widget.productId, widget.productQty,
+                              widget.productPrice);
+                        }),
                   ],
                 )
               ],
@@ -134,11 +152,11 @@ class CartItem extends StatelessWidget {
                     ),
                     onPressed: () {
                       //menghapus item cart
-                      deleteItemCart(productId);
+                      deleteItemCart(widget.productId);
                     }),
                 Text(
                   // "100.000 IDR",
-                  productCost.toString(),
+                  widget.productCost.toString(),
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

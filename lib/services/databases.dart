@@ -43,3 +43,19 @@ Future<void> deleteItemCart(String productId) async {
   carts.doc(userId).collection(orderCollection).doc(productId).delete();
   print("item deleted");
 }
+
+Future<void> updateItemCart(
+    String productId, int productQty, int productPrice) {
+  CollectionReference carts = FirebaseFirestore.instance.collection("carts");
+  String orderCollection = "Order " + levelOrder.toString();
+  int productCost = productQty * productPrice;
+  var updateData = {
+    'productQty': productQty,
+    'productCost': productCost,
+  };
+  carts
+      .doc(userId)
+      .collection(orderCollection)
+      .doc(productId)
+      .update(updateData);
+}
