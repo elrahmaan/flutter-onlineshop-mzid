@@ -8,13 +8,15 @@ class ProductDetail extends StatefulWidget {
   final String productName;
   final int productPrice;
   final String productDesc;
+  final String productCategory;
 
   ProductDetail(
       {this.productId,
       this.productImg,
       this.productName,
       this.productPrice,
-      this.productDesc});
+      this.productDesc,
+      this.productCategory});
 
   @override
   _ProductDetailState createState() => _ProductDetailState();
@@ -345,11 +347,14 @@ class _ProductDetailState extends State<ProductDetail> {
             await addProductToCart(
                 widget.productId,
                 widget.productName,
+                widget.productCategory,
                 widget.productImg,
                 productSize,
                 widget.productPrice,
                 quantity,
                 productCost);
+            _showScaffold(
+                "Product " + widget.productName + " successfully added!");
           },
         ),
       ),

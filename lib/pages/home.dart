@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/pages/orders_page.dart';
 import 'package:online_shop/pages/product_list.dart';
-import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
 import 'package:online_shop/services/authentication.dart';
@@ -32,8 +29,7 @@ class _HomeState extends State<Home> {
           IconButton(icon: Icon(Icons.notifications_none), onPressed: () {}),
           IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () async {
-                await setTotalOrder();
+              onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => Cart()));
               }),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/services/authentication.dart';
-import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
 
 class Cart extends StatefulWidget {
@@ -52,12 +51,30 @@ class _CartState extends State<Cart> {
             Expanded(
               child: ListTile(
                 title: Text("Total: "),
-                subtitle: Text(
-                  totalOrder.toString() + " IDR",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 18),
+                subtitle: Container(
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: carts.snapshots(),
+                    builder: (context, snapshot) {
+                      int total = 0;
+                      if (snapshot.hasData) {
+                        //menghitung total biaya
+                        snapshot.data.docs
+                            .map((e) => total += e["productCost"])
+                            .toList();
+                        return Container(
+                          child: Text(
+                            total.toString() + " IDR",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 18),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
@@ -96,9 +113,12 @@ class _CartState extends State<Cart> {
                                 .map((item) => CartItem(
                                       item['productImg'],
                                       item['productName'],
+                                      item['productCategory'],
                                       item['productPrice'],
                                       item['productId'],
+                                      item['productSize'],
                                       item['productQty'],
+                                      item['productCost'],
                                     ))
                                 .toList(),
                           );

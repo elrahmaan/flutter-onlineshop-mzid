@@ -92,8 +92,13 @@ class ProductList extends StatelessWidget {
                       crossAxisSpacing: 10,
                       scrollDirection: Axis.vertical,
                       children: snapshot.data.docs
-                          .map((item) => ProductItem(item['id'], item['image'],
-                              item['name'], item['price'], item['desc']))
+                          .map((item) => ProductItem(
+                              item['id'],
+                              item['image'],
+                              item['name'],
+                              item['price'],
+                              item['desc'],
+                              item['category']))
                           .toList(),
                     );
                   } else {

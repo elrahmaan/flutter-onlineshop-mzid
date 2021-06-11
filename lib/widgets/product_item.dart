@@ -8,9 +8,10 @@ class ProductItem extends StatelessWidget {
   final String productName;
   final int productPrice;
   final String productDesc;
+  final String productCategory;
 
   ProductItem(this.productId, this.productImg, this.productName,
-      this.productPrice, this.productDesc);
+      this.productPrice, this.productDesc, this.productCategory);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class ProductItem extends StatelessWidget {
               productName: productName,
               productPrice: productPrice,
               productDesc: productDesc,
+              productCategory: productCategory,
             ),
           ),
         );
