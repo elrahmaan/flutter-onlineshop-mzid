@@ -17,6 +17,11 @@ class _CartState extends State<Cart> {
       .doc(userId)
       .collection("Order " + levelOrder.toString());
 
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController addressController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,12 +87,14 @@ class _CartState extends State<Cart> {
               child: Container(
                 height: 50,
                 child: MaterialButton(
-                  onPressed: () {},
                   child: Text(
-                    "Checkout",
+                    "Checkout Now!",
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Color(0xFF1C1C1C),
+                  onPressed: () {
+                    showCheckoutForm();
+                  },
                 ),
               ),
             ),
@@ -134,6 +141,235 @@ class _CartState extends State<Cart> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget showCheckoutForm() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30),
+          topLeft: Radius.circular(30),
+        ),
+      ),
+      builder: (BuildContext bc) {
+        return Padding(
+          padding: EdgeInsets.only(left: 25, right: 25),
+          child: Container(
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: (MediaQuery.of(context).size.height * 0.4),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 250, top: 50),
+                  child: new Column(
+                    children: <Widget>[
+                      Text(
+                        "Checkout Form",
+                        style: TextStyle(
+                          fontSize: 20.00,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.black,
+                        thickness: 2.5,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Name: ",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: nameController,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration: InputDecoration(
+                                hintStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.text_fields,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please input the name';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Address: ",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: addressController,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration: InputDecoration(
+                                hintStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.home,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please input the address';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Phone / WhatsApp: ",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: phoneController,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              decoration: InputDecoration(
+                                hintStyle: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.phone,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please input your phone';
+                                } else if (value.length < 11 ||
+                                    value.length > 13) {
+                                  return 'Phone number must be 11 until 13 characters';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            //button Cancel
+                            MaterialButton(
+                              onPressed: () {
+                                nameController.clear();
+                                addressController.clear();
+                                phoneController.clear();
+
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              color: Color(0xFF1C1C1C),
+                            ),
+
+                            //button Save
+                            MaterialButton(
+                              child: Text(
+                                'Checkout',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              color: Color(0xFF1C1C1C),
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text(
+                                            "Are you sure to checkout your cart ?"),
+                                        actions: [
+                                          //BUTTON "Yes"
+                                          MaterialButton(
+                                            child: Text("Yes"),
+                                            onPressed: () {},
+                                            color: Color(0xFF1C1C1C),
+                                          ),
+
+                                          //BUTTON "Cancel"
+                                          MaterialButton(
+                                            child: Text("Cancel"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
