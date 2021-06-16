@@ -4,6 +4,7 @@ import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
+import 'package:intl/intl.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -351,11 +352,18 @@ class _CartState extends State<Cart> {
                                           MaterialButton(
                                             child: Text("Yes"),
                                             onPressed: () {
+                                              var now = new DateTime.now();
+                                              var formatter =
+                                                  new DateFormat('dd-MM-yyyy')
+                                                      .add_Hms();
+                                              String formattedDateNow =
+                                                  formatter.format(now);
                                               checkoutOrder(
                                                   nameController.text,
                                                   addressController.text,
                                                   phoneController.text,
                                                   totalOrder,
+                                                  formattedDateNow,
                                                   orderCollection);
                                               Navigator.of(context)
                                                   .pushReplacement(
