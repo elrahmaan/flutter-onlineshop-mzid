@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/services/authentication.dart';
+import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
 
 class Cart extends StatefulWidget {
@@ -12,6 +13,7 @@ class Cart extends StatefulWidget {
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class _CartState extends State<Cart> {
+  String orderCollection = "Order " + levelOrder.toString();
   CollectionReference carts = firestore
       .collection("carts")
       .doc(userId)
@@ -21,6 +23,8 @@ class _CartState extends State<Cart> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController addressController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
+
+  int totalOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,7 @@ class _CartState extends State<Cart> {
                         snapshot.data.docs
                             .map((e) => total += e["productCost"])
                             .toList();
+                        totalOrder = total;
                         return Container(
                           child: Text(
                             total.toString() + " IDR",
@@ -88,7 +93,7 @@ class _CartState extends State<Cart> {
                 height: 50,
                 child: MaterialButton(
                   child: Text(
-                    "Checkout Now!",
+                    "Checkout",
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Color(0xFF1C1C1C),
@@ -306,25 +311,31 @@ class _CartState extends State<Cart> {
 
                                 Navigator.pop(context);
                               },
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               color: Color(0xFF1C1C1C),
                             ),
 
-                            //button Save
+                            //button order
                             MaterialButton(
-                              child: Text(
-                                'Checkout',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  'Order now !',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               color: Color(0xFF1C1C1C),
@@ -334,13 +345,24 @@ class _CartState extends State<Cart> {
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
-                                        title: Text(
-                                            "Are you sure to checkout your cart ?"),
+                                        title: Text("Are you sure to order ?"),
                                         actions: [
                                           //BUTTON "Yes"
                                           MaterialButton(
                                             child: Text("Yes"),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              checkoutOrder(
+                                                  nameController.text,
+                                                  addressController.text,
+                                                  phoneController.text,
+                                                  totalOrder,
+                                                  orderCollection);
+                                              Navigator.of(context)
+                                                  .pushReplacement(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Home()));
+                                            },
                                             color: Color(0xFF1C1C1C),
                                           ),
 

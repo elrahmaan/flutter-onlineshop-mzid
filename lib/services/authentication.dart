@@ -58,7 +58,7 @@ Future<String> signInWithGoogle() async {
      * Memfilter userId jika value userId sudah ada pada collection (pernah ditambahkan),
      * maka tidak perlu ditambahkan lagi
      */
-    users.add({
+    users.doc(userId).set({
       'username': name,
       'userId': _auth.currentUser.uid,
       'userEmail': email,
@@ -90,9 +90,9 @@ Future<void> signUpWithEmail(String _username, String _email, String _password,
     levelOrder = 1;
 
     //untuk menambahkan data user pada collection firestore
-    users.add({
+    users.doc(userId).set({
       'username': _username,
-      'userId': _auth.currentUser.uid,
+      'userId': user.uid,
       'userEmail': _email,
       'userAddress': _address,
       'userNumber': _phone,

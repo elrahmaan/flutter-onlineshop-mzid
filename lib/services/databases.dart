@@ -59,3 +59,40 @@ Future<void> updateItemCart(
       .doc(productId)
       .update(updateData);
 }
+
+Future<void> checkoutOrder(String name, String address, String phone,
+    int totalOrder, String collectionRef) {
+  CollectionReference orders = FirebaseFirestore.instance.collection("orders");
+
+  String status = "Unverified";
+  var orderData = {
+    'userEmail': email,
+    'userId': userId,
+    'name': name,
+    'address': address,
+    'phone': phone,
+    'totalOrder': totalOrder,
+    'collectionRef': collectionRef,
+    'status': status
+  };
+  orders.add(orderData);
+
+  //update levelOrder User
+  int level = levelOrder + 1;
+  CollectionReference users = FirebaseFirestore.instance.collection("users");
+  var updateLevel = {'levelOrder': level};
+  users.doc(userId).update(updateLevel);
+}
+
+Future<void> getUserLevel() async {
+  QuerySnapshot userSnapShot = await FirebaseFirestore.instance
+      .collection("users")
+      .where("userId", isEqualTo: userId)
+      .get();
+  //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
+  userSnapShot.docs.forEach(
+    (data) {
+      levelOrder = data["levelOrder"];
+    },
+  );
+}

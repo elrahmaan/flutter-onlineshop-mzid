@@ -7,6 +7,7 @@ import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
 import 'package:online_shop/services/authentication.dart';
+import 'package:online_shop/services/databases.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -29,7 +30,8 @@ class _HomeState extends State<Home> {
           IconButton(icon: Icon(Icons.notifications_none), onPressed: () {}),
           IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () {
+              onPressed: () async {
+                await getUserLevel();
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => Cart()));
               }),
