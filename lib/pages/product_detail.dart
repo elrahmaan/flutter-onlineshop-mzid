@@ -1,14 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 
 class ProductDetail extends StatefulWidget {
-  final String productId;
-  final String productImg;
-  final String productName;
-  final int productPrice;
-  final String productDesc;
-  final String productCategory;
+  String productId;
+  String productImg;
+  String productName;
+  int productPrice;
+  String productDesc;
+  String productCategory;
 
   ProductDetail(
       {this.productId,
@@ -341,20 +343,42 @@ class _ProductDetailState extends State<ProductDetail> {
             style: TextStyle(color: Colors.white),
           ),
           color: Color(0xFF1C1C1C),
-          onPressed: () async {
+          onPressed: () {
             setSize();
             int productCost = widget.productPrice * quantity;
-            await addProductToCart(
-                widget.productId,
-                widget.productName,
-                widget.productCategory,
-                widget.productImg,
-                productSize,
-                widget.productPrice,
-                quantity,
-                productCost);
-            _showScaffold(
-                "Product " + widget.productName + " successfully added!");
+            CollectionReference carts =
+                FirebaseFirestore.instance.collection("carts");
+            String orderCollection = "Order " + levelOrder.toString();
+
+            carts
+                .doc(userId)
+                .collection(orderCollection)
+                .doc(widget.productId)
+                .snapshots()
+                .listen((DocumentSnapshot event) async {
+              //ketika document ada, maka tidak ditambahkan pada cart
+              if (event.exists) {
+                widget.productId = "";
+
+                _showScaffold("Product " +
+                    widget.productName +
+                    " already exist, please check your cart!");
+              } else {
+                addProductToCart(
+                    widget.productId,
+                    widget.productName,
+                    widget.productCategory,
+                    widget.productImg,
+                    productSize,
+                    widget.productPrice,
+                    quantity,
+                    productCost);
+
+                widget.productId = "";
+                _showScaffold(
+                    "Product " + widget.productName + " successfully added!");
+              }
+            });
           },
         ),
       ),

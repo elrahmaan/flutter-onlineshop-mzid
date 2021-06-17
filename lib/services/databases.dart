@@ -26,8 +26,6 @@ Future<void> addProductToCart(
   String orderCollection = "Order " + levelOrder.toString();
   carts.doc(userId).collection(orderCollection).doc(productId).set(itemCart);
 
-  print("Product " + productId + " succesfully added to cart by " + userId);
-
   carts.doc(userId).set({
     "userId": userId,
     "userName": name,
