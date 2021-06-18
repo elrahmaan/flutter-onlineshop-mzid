@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/login_page.dart';
-import 'package:online_shop/pages/orders_page.dart';
+import 'package:online_shop/pages/order_list.dart';
 import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:online_shop/widgets/product_item.dart';
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
             onTap: () {
               setState(() {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => OrdersPage()));
+                    MaterialPageRoute(builder: (context) => OrderList()));
               });
             },
           ),
