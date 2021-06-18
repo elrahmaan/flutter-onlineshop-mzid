@@ -59,10 +59,9 @@ Future<void> updateItemCart(
 }
 
 Future<void> checkoutOrder(String name, String address, String phone,
-    int totalOrder, String orderDateTime, String collectionRef) {
+    int totalOrder, String orderDateTime, String collectionRef, String status) {
   CollectionReference orders = FirebaseFirestore.instance.collection("orders");
 
-  String status = "Unverified";
   var orderData = {
     'userEmail': email,
     'userId': userId,

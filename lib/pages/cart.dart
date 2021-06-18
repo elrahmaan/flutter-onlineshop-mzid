@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
+import 'package:online_shop/pages/order.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
@@ -358,18 +359,37 @@ class _CartState extends State<Cart> {
                                                       .add_Hms();
                                               String formattedDateNow =
                                                   formatter.format(now);
+                                              String status = "Unverified";
                                               checkoutOrder(
                                                   nameController.text,
                                                   addressController.text,
                                                   phoneController.text,
                                                   totalOrder,
                                                   formattedDateNow,
-                                                  orderCollection);
+                                                  orderCollection,
+                                                  status);
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              Home()));
+                                                              Order(
+                                                                buyerName:
+                                                                    nameController
+                                                                        .text,
+                                                                buyerAddress:
+                                                                    addressController
+                                                                        .text,
+                                                                buyerPhone:
+                                                                    phoneController
+                                                                        .text,
+                                                                buyerTime:
+                                                                    formattedDateNow,
+                                                                orderCollection:
+                                                                    orderCollection,
+                                                                totalOrder:
+                                                                    totalOrder,
+                                                                status: status,
+                                                              )));
                                             },
                                             color: Color(0xFF1C1C1C),
                                           ),

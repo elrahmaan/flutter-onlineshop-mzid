@@ -1,12 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:online_shop/pages/order_productItem.dart';
 import 'package:online_shop/services/authentication.dart';
-import 'package:online_shop/pages/home.dart';
+import 'package:online_shop/pages/order_list.dart';
+
+FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class Order extends StatelessWidget {
-  // const Order({ Key? key }) : super(key: key);
+  final String buyerName;
+  final String buyerAddress;
+  final String buyerPhone;
+  final String buyerTime;
+  final String orderCollection;
+  final int totalOrder;
+  final String status;
+
+  Order(
+      {this.buyerName,
+      this.buyerAddress,
+      this.buyerPhone,
+      this.buyerTime,
+      this.orderCollection,
+      this.totalOrder,
+      this.status});
 
   @override
   Widget build(BuildContext context) {
+    var formatNumber = NumberFormat("#,###");
+    CollectionReference productsOrder =
+        firestore.collection("carts").doc(userId).collection(orderCollection);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -31,12 +54,27 @@ class Order extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Deliver To",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Deliver To",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 23,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text("#" + orderCollection),
+                          Text(buyerTime),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   CircleAvatar(
                     radius: 40,
@@ -65,7 +103,7 @@ class Order extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   child: Text(
-                                    name,
+                                    buyerName,
                                     textAlign: TextAlign.right,
                                     style: TextStyle(
                                       fontSize: 17,
@@ -118,7 +156,7 @@ class Order extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                address,
+                                buyerAddress,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 17,
@@ -140,7 +178,7 @@ class Order extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                phone,
+                                buyerPhone,
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 17,
@@ -173,155 +211,33 @@ class Order extends StatelessWidget {
                     "Product Item",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 23,
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      children: [
-                        Image.network(
-                          "https://www.freeiconspng.com/uploads/belt-png-14.png",
-                          width: 80,
-                          height: 80,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Long Sleeve",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Text("Accessories"),
-                            Text("IDR 100,000")
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Row(
-                          children: [
-                            Text("Qty: "),
-                            Text("2"),
-                          ],
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "IDR 200,000",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 19,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                  SizedBox(
+                    height: 10,
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      children: [
-                        Image.network(
-                          "https://www.freeiconspng.com/uploads/belt-png-14.png",
-                          width: 80,
-                          height: 80,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Long Sleeve",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Text("Accessories"),
-                            Text("IDR 100,000")
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Row(
-                          children: [
-                            Text("Qty: "),
-                            Text("2"),
-                          ],
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "IDR 200,000",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 19,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      children: [
-                        Image.network(
-                          "https://www.freeiconspng.com/uploads/belt-png-14.png",
-                          width: 80,
-                          height: 80,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Long Sleeve",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Text("Accessories"),
-                            Text("IDR 100,000")
-                          ],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Row(
-                          children: [
-                            Text("Qty: "),
-                            Text("2"),
-                          ],
-                        ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "IDR 200,000",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 19,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: productsOrder.snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          children: snapshot.data.docs
+                              .map((item) => OrderItem(
+                                    item['productImg'],
+                                    item['productName'],
+                                    item['productCategory'],
+                                    item['productPrice'],
+                                    item['productSize'],
+                                    item['productQty'],
+                                    item['productCost'],
+                                  ))
+                              .toList(),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
                   ),
                 ],
               ),
@@ -340,20 +256,84 @@ class Order extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Order Status",
+                    "Order Total",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 17,
+                      fontSize: 20,
                     ),
                   ),
                   Text(
-                    "Success",
+                    "IDR " + formatNumber.format(totalOrder).toString(),
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Colors.greenAccent[400]),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19,
+                    ),
                   ),
                 ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(color: Colors.grey.withOpacity(.5), blurRadius: 15)
+                ],
+              ),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Order Status",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        status == "Unverified"
+                            ? Text(
+                                "Unverified",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.orangeAccent[400]),
+                              )
+                            : Text(
+                                "Success",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.greenAccent[400]),
+                              ),
+                      ],
+                    ),
+                    status == "Unverified"
+                        ? Text(
+                            "Please contact the admin for verify your order.",
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          )
+                        : Text(
+                            "Your order has been successful. Thank's for buying",
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                    status == "Unverified"
+                        ? Row(
+                            children: [
+                              Image.network(
+                                  "http://assets.stickpng.com/images/5ae21cc526c97415d3213554.png",
+                                  width: 50),
+                              Text("+62 876 1234 5678")
+                            ],
+                          )
+                        : Container(),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -362,8 +342,14 @@ class Order extends StatelessWidget {
               height: 50,
               color: Color(0xFF1C1C1C),
               child: MaterialButton(
-                child:
-                    Text("Go To Home", style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => OrderList()));
+                },
+                child: Text(
+                  "Go To Your History Order",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
