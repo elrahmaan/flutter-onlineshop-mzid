@@ -12,7 +12,7 @@ class CategoryItem extends StatelessWidget {
       children: [
         CircleAvatar(
           maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-          backgroundColor: Color(0xFF1C1C1C),
+          backgroundColor: Color(0xFFFF7643),
           // backgroundColor: Color(color),
           child: Container(
             height: 40,

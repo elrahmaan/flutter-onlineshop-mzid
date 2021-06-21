@@ -7,6 +7,8 @@ import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/cart_item.dart';
 import 'package:intl/intl.dart';
 
+import 'home/home_screen.dart';
+
 class Cart extends StatefulWidget {
   @override
   _CartState createState() => _CartState();
@@ -44,7 +46,7 @@ class _CartState extends State<Cart> {
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (ctx) => Home(),
+                builder: (ctx) => HomeScreen(),
               ),
             );
           },

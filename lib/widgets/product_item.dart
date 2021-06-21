@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:online_shop/pages/detail/product_detail2.dart';
 import 'package:online_shop/pages/product_detail.dart';
 
 class ProductItem extends StatelessWidget {
@@ -21,7 +22,7 @@ class ProductItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => ProductDetail(
+            builder: (context) => ProductDetail2(
               productId: productId,
               productImg: productImg,
               productName: productName,

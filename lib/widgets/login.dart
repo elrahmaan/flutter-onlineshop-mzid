@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
+import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/services/authentication.dart';
 
 class Login extends StatefulWidget {
@@ -187,7 +188,7 @@ class _LoginState extends State<Login> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return Home();
+                                return HomeScreen();
                               },
                             ),
                           );
