@@ -1,6 +1,5 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/services/authentication.dart';
 
@@ -104,12 +103,6 @@ class _LoginState extends State<Login> {
           ),
           //Password
           TextFormField(
-            validator: (value) {
-              // add your custom validation here.
-              if (value.isEmpty) {
-                return 'Empty Field, Please enter some text';
-              }
-            },
             controller: passwordController,
             keyboardType: TextInputType.text,
             obscureText: !passwordVisible,
@@ -153,22 +146,16 @@ class _LoginState extends State<Login> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: 24,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text(errorMessageLogin != null ? errorMessageLogin : "",
-          //         style: TextStyle(
-          //             fontSize: 15,
-          //             color: Colors.red,
-          //             fontWeight: FontWeight.bold)),
-          //   ],
-          // ),
-
           isLoading == false
               ? Container(
                   width: double.infinity,
@@ -180,24 +167,22 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onPressed: () {
-                      _loadingbutton();
-                      signInWithEmailAndPassword(
-                              emailController.text, passwordController.text)
-                          .then((result) {
-                        if (result != null) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return HomeScreen();
-                              },
-                            ),
-                          );
-                        }
-                      });
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => Home()),
-                      // );
+                      if (_formKey.currentState.validate()) {
+                        signInWithEmailAndPassword(
+                                emailController.text, passwordController.text)
+                            .then((result) {
+                          if (result != null) {
+                            // _loadingbutton();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return HomeScreen();
+                                },
+                              ),
+                            );
+                          }
+                        });
+                      }
                     },
                     color: Color(0xFF1C1C1C),
                     elevation: 9.0,

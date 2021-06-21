@@ -18,10 +18,10 @@ String email;
 String password;
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-String p =
-    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+// String p =
+//     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-RegExp regExp = new RegExp(p);
+// RegExp regExp = new RegExp(p);
 
 class _SignUpState extends State<SignUp> {
   TextEditingController usernameController = TextEditingController();
@@ -31,7 +31,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String error = "";
   bool passwordVisible = false;
   bool isLoading = false;
@@ -41,77 +41,10 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  void validation() async {
-    String username = usernameController.text;
-    String email = emailController.text;
-    String password = passwordController.text;
-    String phone = phoneController.text;
-    String address = addressController.text;
-    if (username.isEmpty &&
-        email.isEmpty &&
-        password.isEmpty &&
-        phone.isEmpty &&
-        address.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("All Flied Are Empty"),
-        ),
-      );
-    } else if (username.length < 6) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Name Must Be 6 "),
-        ),
-      );
-    } else if (email.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Email Is Empty"),
-        ),
-      );
-    } else if (!regExp.hasMatch(email)) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Please Try Vaild Email"),
-        ),
-      );
-    } else if (password.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Password Is Empty"),
-        ),
-      );
-    } else if (password.length < 8) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Password  Is Too Short"),
-        ),
-      );
-    } else if (phone.length < 11 || phone.length > 12) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Phone Number Must Be 11 "),
-        ),
-      );
-    } else if (address.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          content: Text("Adress Is Empty "),
-        ),
-      );
-    } else {
-      signUpWithEmail(username, email, password, phone, address);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginPage()));
-      setState(() {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _scaffoldKey,
-      autovalidate: true,
+      key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -139,20 +72,13 @@ class _SignUpState extends State<SignUp> {
           ),
           TextFormField(
             controller: usernameController,
-            validator: (value) {
-              if (value == "") {
-                return "Please enter username";
-              } else if (value.length < 6) {
-                return "Username is to short";
-              }
-            },
             keyboardType: TextInputType.text,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
                 fontWeight: FontWeight.bold,
                 fontSize: 16),
             decoration: InputDecoration(
-                hintText: "User Name",
+                hintText: "Name",
                 hintStyle: TextStyle(
                   fontSize: 16,
                   color: Color(0xFF45D1FD),
@@ -176,16 +102,20 @@ class _SignUpState extends State<SignUp> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter your name";
+              } else if (value.length < 4) {
+                return "name is too short (min 4 characters)";
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: 16,
           ),
           TextFormField(
             controller: emailController,
-            validator: (value) => EmailValidator.validate(value)
-                ? null
-                : "Please enter a valid email",
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
@@ -216,19 +146,15 @@ class _SignUpState extends State<SignUp> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) => EmailValidator.validate(value)
+                ? null
+                : "Please enter a valid email",
           ),
           SizedBox(
             height: 16,
           ),
           //Password
           TextFormField(
-            validator: (value) {
-              // add your custom validation here.
-              if (value.isEmpty) {
-                return 'Empty Field, Please enter some text';
-              }
-            },
             controller: passwordController,
             keyboardType: TextInputType.text,
             obscureText: !passwordVisible,
@@ -272,18 +198,21 @@ class _SignUpState extends State<SignUp> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) {
+              // add your custom validation here.
+              if (value == null || value.isEmpty) {
+                return 'Please enter the password';
+              } else if (value.length < 8) {
+                return "Password is too short (min 8 characters)";
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: 16,
           ),
           TextFormField(
             controller: phoneController,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter phone number';
-              }
-            },
             keyboardType: TextInputType.number,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
@@ -314,18 +243,20 @@ class _SignUpState extends State<SignUp> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              } else if (value.length < 11 || value.length > 13) {
+                return "Please enter 11-13 character";
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: 16,
           ),
           TextFormField(
             controller: addressController,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter your address';
-              }
-            },
             keyboardType: TextInputType.text,
             style: TextStyle(
                 color: Color(0xFF45D1FD),
@@ -355,21 +286,16 @@ class _SignUpState extends State<SignUp> {
                   horizontal: 16,
                   vertical: 0,
                 )),
-            onChanged: (value) {},
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your address';
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: 24,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text(errorMessageRegister != null ? errorMessageRegister : "",
-          //         style: TextStyle(
-          //             fontSize: 15,
-          //             color: Colors.red,
-          //             fontWeight: FontWeight.bold)),
-          //   ],
-          // ),
           isLoading == false
               ? Container(
                   width: double.infinity,
@@ -381,7 +307,22 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     onPressed: () {
-                      validation();
+                      if (_formKey.currentState.validate()) {
+                        signUpWithEmail(
+                                usernameController.text,
+                                emailController.text,
+                                passwordController.text,
+                                phoneController.text,
+                                addressController.text)
+                            .then((result) {
+                          if (result != null) {
+                            _loadingbutton();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          }
+                        });
+                      }
                     },
                     color: Color(0xFF45D1FD),
                     elevation: 9.0,
