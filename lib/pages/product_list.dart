@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/home.dart';
+import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/widgets/product_item.dart';
+
+import 'home/components/home_header.dart';
 
 class ProductList extends StatelessWidget {
   final String category;
@@ -15,60 +18,11 @@ class ProductList extends StatelessWidget {
     CollectionReference products = firestore.collection("products");
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("MZ.ID", style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => Home(),
-              ),
-            );
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.notifications_none,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, color: Colors.black),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_sharp, color: Colors.black),
-            label: 'User',
-          ),
-        ],
-      ),
       body: Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: ListView(
           children: [
+            HomeHeader(),
             Container(
               padding: EdgeInsets.only(left: 10),
               child: Text(
