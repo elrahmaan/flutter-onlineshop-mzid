@@ -65,6 +65,8 @@ class _ProductDetail2State extends State<ProductDetail2> {
     });
   }
 
+  var formatNumber = NumberFormat("#,###");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +77,7 @@ class _ProductDetail2State extends State<ProductDetail2> {
             Center(
               child: Container(
                 color: Color(0xFFF6F7F6),
+                // color: Color(0xFFF9AAA6),
                 width: 220,
                 child: Card(
                   child: Container(
@@ -101,6 +104,32 @@ class _ProductDetail2State extends State<ProductDetail2> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            padding:
+                                EdgeInsets.all(getProportionateScreenWidth(15)),
+                            width: getProportionateScreenWidth(184),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFFE6E6),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                "IDR " +
+                                    formatNumber
+                                        .format(widget.productPrice)
+                                        .toString(),
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: getProportionateScreenWidth(20)),
@@ -109,61 +138,14 @@ class _ProductDetail2State extends State<ProductDetail2> {
                             style: Theme.of(context).textTheme.headline6,
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            padding:
-                                EdgeInsets.all(getProportionateScreenWidth(15)),
-                            width: getProportionateScreenWidth(64),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFFE6E6),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                              ),
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Heart Icon_2.svg",
-                              color: Colors.red,
-                              height: getProportionateScreenWidth(16),
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: EdgeInsets.only(
                             left: getProportionateScreenWidth(20),
                             right: getProportionateScreenWidth(64),
                           ),
-                          child: Text(
-                            widget.productDesc,
-                            maxLines: 2,
-                          ),
+                          child: new DescriptionTextWidget(
+                              text: widget.productDesc),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(20),
-                            vertical: 10,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              children: [
-                                Text(
-                                  "See More Detail",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: kPrimaryColor),
-                                ),
-                                SizedBox(width: 5),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 12,
-                                  color: kPrimaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
                       ],
                     ),
                     TopRoundedContainer(
@@ -357,6 +339,68 @@ class _ProductDetail2State extends State<ProductDetail2> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class DescriptionTextWidget extends StatefulWidget {
+  final String text;
+
+  DescriptionTextWidget({@required this.text});
+
+  @override
+  _DescriptionTextWidgetState createState() =>
+      new _DescriptionTextWidgetState();
+}
+
+class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
+  String firstHalf;
+  String secondHalf;
+
+  bool flag = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.text.length > 50) {
+      firstHalf = widget.text.substring(0, 50);
+      secondHalf = widget.text.substring(50, widget.text.length);
+    } else {
+      firstHalf = widget.text;
+      secondHalf = "";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: secondHalf.isEmpty
+          ? new Text(firstHalf)
+          : new Column(
+              children: <Widget>[
+                new Text(flag ? (firstHalf + "...") : (firstHalf + secondHalf)),
+                new InkWell(
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      new Text(
+                        flag ? "Show More Detail" : "Show Less Detail",
+                        style: new TextStyle(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    setState(() {
+                      flag = !flag;
+                    });
+                  },
+                ),
+              ],
+            ),
     );
   }
 }

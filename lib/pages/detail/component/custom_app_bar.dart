@@ -44,19 +44,6 @@ class CustomAppBar extends PreferredSize {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Row(
-                children: [
-                  Text(
-                    "5",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  SvgPicture.asset("assets/icons/Star Icon.svg"),
-                ],
-              ),
             )
           ],
         ),
