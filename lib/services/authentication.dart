@@ -55,15 +55,32 @@ Future<String> signInWithGoogle() async {
     CollectionReference users = firestore.collection("users");
     userId = user.uid;
     /**
-     * Memfilter userId jika value userId sudah ada pada collection (pernah ditambahkan),
+     * Mengecek userId jika value userId sudah ada pada collection (pernah ditambahkan),
      * maka tidak perlu ditambahkan lagi
      */
-    users.doc(userId).set({
-      'username': name,
-      'userId': _auth.currentUser.uid,
-      'userEmail': email,
-      'userNumber': phone,
-      'levelOrder': 1
+    users.doc(userId).snapshots().listen((DocumentSnapshot event) async {
+      if (event.exists) {
+        QuerySnapshot userSnapShot =
+            await FirebaseFirestore.instance.collection("users").get();
+        //melakukan penyeleksian data user dari collection "users" dengan melakukan perulangan
+        userSnapShot.docs.forEach(
+          (data) {
+            //ketika data sesi uid yang digunakan bernilai sama dengan nilai dari field userId dari collection "users"
+            if (user.uid == data["userId"]) {
+              levelOrder = data["levelOrder"];
+            }
+          },
+        );
+        print("level " + levelOrder.toString());
+      } else {
+        users.doc(userId).set({
+          'username': name,
+          'userId': _auth.currentUser.uid,
+          'userEmail': email,
+          'userNumber': phone,
+          'levelOrder': 1
+        });
+      }
     });
     print('signInWithGoogle succeeded: $user');
     return '$user';
@@ -74,7 +91,6 @@ Future<String> signInWithGoogle() async {
 Future<User> signUpWithEmail(String _username, String _email, String _password,
     String _phone, String _address) async {
   await Firebase.initializeApp();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   try {
     UserCredential authResult = await _auth.createUserWithEmailAndPassword(
@@ -89,36 +105,30 @@ Future<User> signUpWithEmail(String _username, String _email, String _password,
     address = _address;
     levelOrder = 1;
 
-    //untuk menambahkan data user pada collection firestore
-    users.doc(userId).set({
-      'username': _username,
-      'userId': user.uid,
-      'userEmail': _email,
-      'userAddress': _address,
-      'userNumber': _phone,
-      'levelOrder': 1
+    users.doc(userId).snapshots().listen((DocumentSnapshot event) async {
+      /**
+       * ketika data tidak ada/belum ada, maka data akan di set sebagai document di dalam collection "users"
+      karena jikalau misal terjadi error saat proses sign up disebabkan "email pernah digunakan" atau error lainnya,
+      maka tidak akan di set
+       */
+      if (!event.exists) {
+        users.doc(userId).set({
+          'username': _username,
+          'userId': user.uid,
+          'userEmail': _email,
+          'userAddress': _address,
+          'userNumber': _phone,
+          'levelOrder': 1
+        });
+        print("level " + levelOrder.toString());
+      } else {}
     });
+
     return user;
-
     // print(result);
-  } on PlatformException catch (error) {
-    var message = "Please Check Your Internet Connection ";
-    if (error.message != null) {
-      message = error.message;
-    }
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(message.toString()),
-        duration: Duration(milliseconds: 600),
-        // backgroundColor: Theme.of(context).primaryColor,
-        backgroundColor: Colors.blue));
-  } catch (error) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(error.toString()),
-        duration: Duration(milliseconds: 600),
-        // backgroundColor: Theme.of(context).primaryColor,
-        backgroundColor: Colors.blue));
-
-    print(error);
+  } catch (e) {
+    print(e.toString());
+    return null;
   }
 }
 
