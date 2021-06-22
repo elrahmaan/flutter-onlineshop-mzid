@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
 import 'package:online_shop/pages/product_detail.dart';
 
+import '../constants.dart';
+
 class ProductItem extends StatelessWidget {
   final String productId;
   final String productImg;
@@ -79,12 +81,12 @@ class ProductItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
+                  padding: const EdgeInsets.only(left: 30.0),
                   child: Text(
-                    formatNumber.format(productPrice).toString() + " IDR",
+                    "IDR " + formatNumber.format(productPrice).toString(),
                     style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black,
+                        color: kPrimaryColor,
                         fontWeight: FontWeight.normal),
                   ),
                 ),

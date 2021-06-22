@@ -37,12 +37,21 @@ class CustomAppBar extends PreferredSize {
                 ),
               ),
             ),
-            Spacer(),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
+              ),
+              child: Center(
+                child: Text(
+                  "Filter by Category",
+                  style: const TextStyle(
+                    fontSize: 17,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             )
           ],
