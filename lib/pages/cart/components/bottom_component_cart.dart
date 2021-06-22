@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
+import 'package:online_shop/pages/order.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/default_button.dart';
@@ -356,7 +357,24 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                   .pushReplacement(
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              HomeScreen()));
+                                                              Order(
+                                                                buyerName:
+                                                                    nameController
+                                                                        .text,
+                                                                buyerAddress:
+                                                                    addressController
+                                                                        .text,
+                                                                buyerPhone:
+                                                                    phoneController
+                                                                        .text,
+                                                                buyerTime:
+                                                                    formattedDateNow,
+                                                                orderCollection:
+                                                                    orderCollection,
+                                                                totalOrder:
+                                                                    totalOrder,
+                                                                status: status,
+                                                              )));
                                             },
                                             color: Color(0xFF1C1C1C),
                                           ),
