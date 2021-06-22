@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/cart.dart';
+import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/profile/profile_screen.dart';
@@ -28,7 +29,7 @@ class HomeHeader extends StatelessWidget {
               press: () async {
                 await getUserLevel();
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Cart()));
+                    MaterialPageRoute(builder: (context) => CartScreen()));
               }),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Bell.svg",

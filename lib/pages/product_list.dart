@@ -4,6 +4,7 @@ import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/widgets/product_item.dart';
 
+import 'detail/component/custom_app_bar.dart';
 import 'home/components/home_header.dart';
 
 class ProductList extends StatelessWidget {
@@ -22,7 +23,7 @@ class ProductList extends StatelessWidget {
         padding: EdgeInsets.only(left: 10, right: 10),
         child: ListView(
           children: [
-            HomeHeader(),
+            CustomAppBar(),
             Container(
               padding: EdgeInsets.only(left: 10),
               child: Text(

@@ -1,0 +1,93 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:online_shop/services/authentication.dart';
+import 'package:online_shop/widgets/cart_item.dart';
+
+import '../../size_config.dart';
+import 'components/cart_card.dart';
+import 'components/bottom_component_cart.dart';
+
+class CartScreen extends StatefulWidget {
+  // const CartScreen({ Key? key }) : super(key: key);
+
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+class _CartScreenState extends State<CartScreen> {
+  String orderCollection = "Order " + levelOrder.toString();
+  CollectionReference carts = firestore
+      .collection("carts")
+      .doc(userId)
+      .collection("Order " + levelOrder.toString());
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController addressController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+
+  int totalOrder;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        child: ListView(
+          children: [
+            Container(
+              child: StreamBuilder<QuerySnapshot>(
+                // itemCount: demoCarts.length,
+                stream: carts.snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: snapshot.data.docs
+                          .map((item) => CartCard(
+                                item['productImg'],
+                                item['productName'],
+                                item['productCategory'],
+                                item['productPrice'],
+                                item['productId'],
+                                item['productSize'],
+                                item['productQty'],
+                                item['productCost'],
+                              ))
+                          .toList(),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+                // CartCard(cart: demoCarts[index]),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: CheckoutCard(),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Column(
+        children: [
+          Text(
+            "Your Cart",
+            style: TextStyle(color: Colors.black),
+          ),
+          // Text(
+          //   "${demoCarts.length} items",
+          //   style: Theme.of(context).textTheme.caption,
+          // ),
+        ],
+      ),
+    );
+  }
+}

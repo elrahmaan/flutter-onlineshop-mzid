@@ -71,7 +71,7 @@ Future<String> signInWithGoogle() async {
   return null;
 }
 
-Future<void> signUpWithEmail(String _username, String _email, String _password,
+Future<User> signUpWithEmail(String _username, String _email, String _password,
     String _phone, String _address) async {
   await Firebase.initializeApp();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
