@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/cart.dart';
+import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
@@ -31,22 +32,33 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(name, style: TextStyle(color: Colors.black)),
+            accountName: Text(name, style: TextStyle(color: Colors.white)),
             currentAccountPicture: CircleAvatar(
               radius: 25,
               backgroundImage: NetworkImage(imageUrl),
             ),
-            decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Colors.blue,
+                Colors.red,
+              ],
+            )),
             accountEmail: Text(
               email,
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           ListTile(
             title: Text('Home'),
             leading: Icon(Icons.home),
             onTap: () {
-              setState(() {});
+              setState(() {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+              });
             },
           ),
           ListTile(
@@ -55,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               setState(() {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => Cart()));
+                    MaterialPageRoute(builder: (context) => CartScreen()));
               });
             },
           ),

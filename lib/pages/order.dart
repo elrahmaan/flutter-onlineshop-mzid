@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:online_shop/pages/order_productItem.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/pages/order_list.dart';
+import 'package:online_shop/widgets/default_button.dart';
+
+import '../size_config.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -31,16 +34,11 @@ class Order extends StatelessWidget {
     CollectionReference productsOrder =
         firestore.collection("carts").doc(userId).collection(orderCollection);
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Detail Order", style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
       body: Container(
         padding: EdgeInsets.only(bottom: 20),
         child: ListView(
-          children: [
+          children: <Widget>[
+            _appbar(),
             Container(
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
@@ -276,7 +274,7 @@ class Order extends StatelessWidget {
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFF4A3298),
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(color: Colors.grey.withOpacity(.5), blurRadius: 15)
@@ -294,6 +292,7 @@ class Order extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
+                            color: Colors.white,
                           ),
                         ),
                         status == "Unverified"
@@ -316,11 +315,15 @@ class Order extends StatelessWidget {
                     status == "Unverified"
                         ? Text(
                             "Please contact the admin for verify your order.",
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.white),
                           )
                         : Text(
                             "Your order has been successful. Thank's for buying",
-                            style: TextStyle(fontStyle: FontStyle.italic),
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.white),
                           ),
                     status == "Unverified"
                         ? Row(
@@ -328,7 +331,10 @@ class Order extends StatelessWidget {
                               Image.network(
                                   "http://assets.stickpng.com/images/5ae21cc526c97415d3213554.png",
                                   width: 50),
-                              Text("+62 876 1234 5678")
+                              Text(
+                                "+62 876 1234 5678",
+                                style: TextStyle(color: Colors.white),
+                              )
                             ],
                           )
                         : Container(),
@@ -340,18 +346,42 @@ class Order extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               width: double.infinity,
               height: 50,
-              color: Color(0xFF1C1C1C),
-              child: MaterialButton(
-                onPressed: () {
+              // color: Color(0xFF1C1C1C),
+              child: DefaultButton(
+                press: () {
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => OrderList()));
                 },
-                child: Text(
-                  "Go To Your History Order",
-                  style: TextStyle(color: Colors.white),
-                ),
+                text: "Go To Your History Order",
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _appbar() {
+    return SafeArea(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(0)),
+        child: Row(
+          children: [
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(120)),
+              child: Center(
+                child: Text("Detail Order",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 23,
+                    )),
+              ),
+            ),
+            SizedBox(height: 20),
           ],
         ),
       ),

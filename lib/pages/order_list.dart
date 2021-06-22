@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:online_shop/pages/home.dart';
 import 'package:online_shop/widgets/order_item.dart';
 import 'package:online_shop/services/authentication.dart';
+
+import '../size_config.dart';
+import 'home/home_screen.dart';
 
 class OrderList extends StatefulWidget {
   @override
@@ -17,28 +21,9 @@ class _OrderListState extends State<OrderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Order Transaction History",
-            style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => Home(),
-              ),
-            );
-          },
-        ),
-      ),
       body: ListView(
         children: [
+          _appbar(),
           Container(
             child: StreamBuilder<QuerySnapshot>(
               //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
@@ -66,6 +51,57 @@ class _OrderListState extends State<OrderList> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _appbar() {
+    return SafeArea(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        child: Row(
+          children: [
+            SizedBox(
+              height: getProportionateScreenWidth(40),
+              width: getProportionateScreenWidth(40),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                color: Colors.white,
+                padding: EdgeInsets.zero,
+                onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (ctx) => HomeScreen(),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  "assets/icons/Back ICon.svg",
+                  height: 15,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "Order Transaction History",
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
