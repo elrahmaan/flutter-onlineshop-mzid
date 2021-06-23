@@ -1,8 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:online_shop/pages/home/components/section_title.dart';
 import 'package:online_shop/pages/product_list.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/category_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:online_shop/widgets/product_item.dart';
 
 import '../../../size_config.dart';
 import '../../login_page.dart';
@@ -19,19 +22,19 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  CollectionReference products =
+      FirebaseFirestore.instance.collection("products");
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            HomeHeader(),
-            _carouselImage(),
-            DiscountBanner(),
-            _category(),
-            Categories(),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          HomeHeader(),
+          _carouselImage(),
+          DiscountBanner(),
+          _category(),
+          _featuredProduct(),
+        ],
       ),
     );
   }
@@ -144,6 +147,53 @@ class _BodyState extends State<Body> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _featuredProduct() {
+    CollectionReference products =
+        FirebaseFirestore.instance.collection("products");
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: 10),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Featured Product",
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Container(
+          height: 600,
+          child: StreamBuilder<QuerySnapshot>(
+            //memanggil collection data produk berdasarkan field kategori yang bernilai nama kategori yang diterima
+            stream: products.where('price', isGreaterThan: 500000).snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.72,
+                  padding: const EdgeInsets.all(10),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  scrollDirection: Axis.vertical,
+                  children: snapshot.data.docs
+                      .map((item) => ProductItem(
+                          item['id'],
+                          item['image'],
+                          item['name'],
+                          item['price'],
+                          item['desc'],
+                          item['category']))
+                      .toList(),
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 }
