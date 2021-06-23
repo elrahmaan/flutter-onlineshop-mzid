@@ -124,7 +124,24 @@ class _CheckoutCardState extends State<CheckoutCard> {
                   child: DefaultButton(
                     text: "Check Out",
                     press: () {
-                      showCheckoutForm();
+                      if (totalOrder == 0) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Information'),
+                            content: const Text(
+                                'Empty cart, please add the product'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        showCheckoutForm();
+                      }
                     },
                   ),
                 ),
