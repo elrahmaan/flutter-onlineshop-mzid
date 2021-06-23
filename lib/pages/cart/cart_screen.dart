@@ -43,7 +43,6 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             Container(
               child: StreamBuilder<QuerySnapshot>(
-                // itemCount: demoCarts.length,
                 stream: carts.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {

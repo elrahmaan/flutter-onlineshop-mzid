@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
+import 'package:online_shop/pages/home/components/icon_btn_with_counter.dart';
+import 'package:online_shop/pages/home/components/search_field.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
 import 'package:online_shop/pages/order_list.dart';
+import 'package:online_shop/services/databases.dart';
 
 import '../../enums.dart';
 import '../login_page.dart';
@@ -21,6 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: SearchField(),
+        actions: [
+          IconBtnWithCounter(
+              svgSrc: "assets/icons/Cart Icon.svg",
+              press: () async {
+                await getUserLevel();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => CartScreen()));
+              }),
+        ],
+      ),
       body: Body(),
       drawer: _drawer(),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),

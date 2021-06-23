@@ -32,8 +32,9 @@ class ProductList extends StatelessWidget {
               // ),
               Center(
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(left: getProportionateScreenWidth(35)),
+                  padding: EdgeInsets.only(
+                      left: getProportionateScreenWidth(35),
+                      bottom: getProportionateScreenHeight(15)),
                   child: Row(
                     children: [
                       SpecialOfferCard(

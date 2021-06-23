@@ -29,7 +29,7 @@ class _BodyState extends State<Body> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          HomeHeader(),
+          // HomeHeader(),
           _carouselImage(),
           DiscountBanner(),
           _category(),
@@ -170,22 +170,29 @@ class _BodyState extends State<Body> {
             stream: products.where('price', isGreaterThan: 500000).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.72,
-                  padding: const EdgeInsets.all(10),
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  scrollDirection: Axis.vertical,
-                  children: snapshot.data.docs
-                      .map((item) => ProductItem(
-                          item['id'],
-                          item['image'],
-                          item['name'],
-                          item['price'],
-                          item['desc'],
-                          item['category']))
-                      .toList(),
+                return NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (overscroll) {
+                    overscroll.disallowGlow();
+                  },
+                  child: GridView.count(
+                    // shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.72,
+                    padding: const EdgeInsets.all(10),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    scrollDirection: Axis.vertical,
+                    children: snapshot.data.docs
+                        .map((item) => ProductItem(
+                            item['id'],
+                            item['image'],
+                            item['name'],
+                            item['price'],
+                            item['desc'],
+                            item['category']))
+                        .toList(),
+                  ),
                 );
               } else {
                 return Container();
