@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFF1C1C1C),
+        backgroundColor: Color(0xFF45D1FD),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +87,7 @@ class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint();
-    paint.color = Color(0xFF45D1FD);
+    paint.color = Color(0xFFFFFFFF);
     paint.style = PaintingStyle.fill;
 
     Path path = Path();

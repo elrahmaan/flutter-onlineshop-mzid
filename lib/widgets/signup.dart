@@ -53,7 +53,7 @@ class _SignUpState extends State<SignUp> {
             "You must have an account",
             style: TextStyle(
               fontSize: 12,
-              color: Color(0xFF45D1FD),
+              color: Color(0xFF1C1C1C),
               height: 2,
             ),
           ),
@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
             "SIGN UP",
             style: TextStyle(
               fontSize: 32,
-              color: Color(0xFF45D1FD),
+              color: Color(0xFF1C1C1C),
               height: 1,
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
@@ -324,7 +324,7 @@ class _SignUpState extends State<SignUp> {
                         });
                       }
                     },
-                    color: Color(0xFF45D1FD),
+                    color: Color(0xFF1C1C1C),
                     elevation: 9.0,
                     splashColor: Colors.blue[200],
                     child: Center(
@@ -333,7 +333,7 @@ class _SignUpState extends State<SignUp> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF45D1FD),
                         ),
                       ),
                     ),
@@ -344,43 +344,6 @@ class _SignUpState extends State<SignUp> {
                 ),
           SizedBox(
             height: 24,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "or Sign up With",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF45D1FD),
-                  height: 1,
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              IconButton(
-                onPressed: () {
-                  signInWithGoogle().then((result) {
-                    if (result != null) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return Home();
-                          },
-                        ),
-                      );
-                    }
-                  });
-                },
-                icon: Icon(
-                  Entypo.google__with_circle,
-                  size: 40,
-                  color: Color(0xFF45D1FD),
-                ),
-              ),
-            ],
           ),
         ],
       ),

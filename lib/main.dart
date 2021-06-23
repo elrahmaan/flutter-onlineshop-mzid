@@ -24,11 +24,12 @@ class MyApp extends StatelessWidget {
       theme: theme(),
       home: AnimatedSplashScreen(
         splash:
-            '[n]https://t4.ftcdn.net/jpg/03/34/07/75/360_F_334077587_NsRtBwBniM0FkYxHcMIDpmjAidUhGtLU.jpg',
+            '[n]https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/2c90bb65-3c93-4f38-8f43-0469c153c1e0/dem0uc2-5da159f2-44d4-4e53-bb91-6aa87ea3d803.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzJjOTBiYjY1LTNjOTMtNGYzOC04ZjQzLTA0NjljMTUzYzFlMFwvZGVtMHVjMi01ZGExNTlmMi00NGQ0LTRlNTMtYmI5MS02YWE4N2VhM2Q4MDMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.6zUD9t5VkPwp7wY7KiV0NDfY1y8QXmpkUenCfIV20is',
         nextScreen: SplashScreen(),
         backgroundColor: Color(0xFF07080A),
         splashTransition: SplashTransition.scaleTransition,
         duration: 2700,
+        splashIconSize: 300,
       ),
       // home: SplashScreen(),
       // We use routeName so that we dont need to remember the name
