@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/constants.dart';
 
 class CategoryItem extends StatelessWidget {
   final String image;
@@ -12,7 +13,7 @@ class CategoryItem extends StatelessWidget {
       children: [
         CircleAvatar(
           maxRadius: MediaQuery.of(context).size.height * 0.1 / 2.5,
-          backgroundColor: Color(0xFFFF7643),
+          backgroundColor: kPrimaryColor,
           // backgroundColor: Color(color),
           child: Container(
             height: 40,

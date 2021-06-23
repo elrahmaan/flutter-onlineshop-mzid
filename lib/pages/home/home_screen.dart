@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
 import 'package:online_shop/pages/home/components/icon_btn_with_counter.dart';
 import 'package:online_shop/pages/home/components/search_field.dart';
+import 'package:online_shop/pages/product_discover.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
 import 'package:online_shop/pages/order_list.dart';
@@ -25,15 +27,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: SearchField(),
+        centerTitle: true,
+        title: Text("MZ.ID"),
         actions: [
-          IconBtnWithCounter(
-              svgSrc: "assets/icons/Cart Icon.svg",
-              press: () async {
-                await getUserLevel();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => CartScreen()));
-              }),
+          // IconButton(icon: Icon(Icons.th),),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => ProductDiscovery()));
+            },
+            child: Container(
+              // decoration: BoxDecoration(
+              //   color: Color(0xFFF5F6F9),
+              //   borderRadius: BorderRadius.circular(50),
+              // ),
+              child: SvgPicture.asset(
+                "assets/icons/Discover.svg",
+                color: Color(0xFF939393),
+                width: 45,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () async {
+              await getUserLevel();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => CartScreen()));
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: SvgPicture.asset(
+                "assets/icons/Cart Icon.svg",
+                color: Color(0xFF939393),
+                width: 35,
+              ),
+            ),
+          ),
         ],
       ),
       body: Body(),
