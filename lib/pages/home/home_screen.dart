@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:online_shop/constants.dart';
 import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/cart/cart_screen.dart';
-import 'package:online_shop/pages/detail/product_detail2.dart';
 import 'package:online_shop/pages/home/components/icon_btn_with_counter.dart';
 import 'package:online_shop/pages/home/components/search_field.dart';
 import 'package:online_shop/pages/product_discover.dart';
@@ -16,8 +16,6 @@ import '../login_page.dart';
 import 'components/body.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = "/home";
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -87,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               end: Alignment.bottomLeft,
               colors: [
                 Colors.blue,
-                Colors.red,
+                kPrimaryColor,
               ],
             )),
             accountEmail: Text(

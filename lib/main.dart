@@ -28,12 +28,11 @@ class MyApp extends StatelessWidget {
         nextScreen: SplashScreen(),
         backgroundColor: Color(0xFF07080A),
         splashTransition: SplashTransition.scaleTransition,
-        duration: 2700,
+        duration: 15700,
         splashIconSize: 300,
       ),
       // home: SplashScreen(),
       // We use routeName so that we dont need to remember the name
-      routes: routes,
     );
   }
 }

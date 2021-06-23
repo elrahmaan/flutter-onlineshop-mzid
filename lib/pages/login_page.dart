@@ -5,7 +5,6 @@ import 'package:online_shop/widgets/signup.dart';
 import 'package:online_shop/widgets/singup_option.dart';
 
 class LoginPage extends StatefulWidget {
-  static String routeName = "/login";
   @override
   _LoginPageState createState() => _LoginPageState();
 }

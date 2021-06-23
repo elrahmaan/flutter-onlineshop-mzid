@@ -45,8 +45,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
+                onPressed: () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen())),
               ),
               IconButton(
                 icon: SvgPicture.asset(
@@ -55,8 +55,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, ProfileScreen.routeName),
+                onPressed: () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => ProfileScreen())),
               ),
             ],
           )),

@@ -176,7 +176,7 @@ class _LoginState extends State<Login> {
                                 emailController.text, passwordController.text)
                             .then((result) {
                           if (result != null) {
-                            // _loadingbutton();
+                            _loadingbutton();
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) {

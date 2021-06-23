@@ -13,8 +13,6 @@ import '../../size_config.dart';
 import 'component/custom_app_bar.dart';
 
 class ProductDetail2 extends StatefulWidget {
-  static String routeName = "/details";
-
   String productId;
   String productImg;
   String productName;

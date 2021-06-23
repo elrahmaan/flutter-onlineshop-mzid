@@ -17,7 +17,7 @@ class SplashContent extends StatelessWidget {
       children: <Widget>[
         Spacer(),
         Text(
-          "MZID",
+          "MZ.ID",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(36),
             color: kPrimaryColor,
