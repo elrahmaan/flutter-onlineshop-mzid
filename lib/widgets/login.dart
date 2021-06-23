@@ -1,7 +1,11 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/services/authentication.dart';
+
+import '../size_config.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -202,6 +206,84 @@ class _LoginState extends State<Login> {
               : Center(
                   child: CircularProgressIndicator(),
                 ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "or Sign in With",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF1C1C1C),
+                      height: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          signInWithGoogle().then((result) {
+                            if (result != null) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return HomeScreen();
+                                  },
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(10)),
+                          padding:
+                              EdgeInsets.all(getProportionateScreenWidth(12)),
+                          height: getProportionateScreenHeight(50),
+                          width: getProportionateScreenWidth(50),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF5F6F9),
+                            shape: BoxShape.circle,
+                          ),
+                          child:
+                              SvgPicture.asset("assets/icons/google-icon.svg"),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // IconButton(
+                  //   onPressed: () {
+                  //     signInWithGoogle().then((result) {
+                  //       if (result != null) {
+                  //         Navigator.of(context).push(
+                  //           MaterialPageRoute(
+                  //             builder: (context) {
+                  //               return HomeScreen();
+                  //             },
+                  //           ),
+                  //         );
+                  //       }
+                  //     });
+                  //   },
+                  //   icon: Icon(
+                  //     Entypo.google__with_circle,
+                  //     size: 40,
+                  //     color: Color(0xFF45D1FD),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
