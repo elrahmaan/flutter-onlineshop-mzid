@@ -1,3 +1,4 @@
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop/constants.dart';
@@ -73,26 +74,32 @@ class _HomeScreenState extends State<HomeScreen> {
     return Drawer(
       child: ListView(
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(name, style: TextStyle(color: Colors.white)),
-            currentAccountPicture: CircleAvatar(
-              radius: 25,
-              backgroundImage: NetworkImage(imageUrl),
-            ),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Colors.blue,
-                kPrimaryColor,
+          Container(
+            child: Stack(
+              children: <Widget>[
+                Image.network(
+                  "https://thumbs.dreamstime.com/b/geometric-modern-blue-yellow-background-aesthetic-wallpaper-geometric-modern-blue-yellow-background-205229466.jpg",
+                ),
+                UserAccountsDrawerHeader(
+                  margin: const EdgeInsets.only(top: 35.0),
+                  accountName:
+                      Text(name, style: TextStyle(color: Colors.white)),
+                  currentAccountPicture: CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(imageUrl),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  accountEmail: Text(
+                    email,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
-            )),
-            accountEmail: Text(
-              email,
-              style: TextStyle(color: Colors.white),
             ),
           ),
+          //
           ListTile(
             title: Text('Home'),
             leading: Icon(Icons.home),

@@ -4,7 +4,6 @@ import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:online_shop/pages/splash/splash_screen.dart';
-import 'package:online_shop/routes.dart';
 import 'package:online_shop/theme.dart';
 
 void main() async {

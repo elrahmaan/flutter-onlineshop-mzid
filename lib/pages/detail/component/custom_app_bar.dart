@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CustomAppBar extends PreferredSize {
@@ -45,10 +46,10 @@ class CustomAppBar extends PreferredSize {
               ),
               child: Center(
                 child: Text(
-                  "Filter by Category",
+                  "Detail Product",
                   style: const TextStyle(
                     fontSize: 17,
-                    color: Colors.black,
+                    color: kTextColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

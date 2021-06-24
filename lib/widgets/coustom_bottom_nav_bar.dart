@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_shop/pages/home/home_screen.dart';
-import 'package:online_shop/pages/profile/profile_screen.dart';
+import 'package:online_shop/pages/profiles/profile.dart';
 
 import '../constants.dart';
 import '../enums.dart';
@@ -56,7 +56,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       : inActiveIconColor,
                 ),
                 onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => ProfileScreen())),
+                    MaterialPageRoute(builder: (context) => Profiles())),
               ),
             ],
           )),
