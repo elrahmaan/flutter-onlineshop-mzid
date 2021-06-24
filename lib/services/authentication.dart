@@ -99,7 +99,7 @@ Future<User> signUpWithEmail(String _username, String _email, String _password,
     name = _username;
     email = _email;
     imageUrl =
-        "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
+        "https://png.pngtree.com/png-vector/20190225/ourlarge/pngtree-vector-avatar-icon-png-image_702436.jpg";
     emailAccount = true;
     userId = user.uid;
     address = _address;
@@ -151,13 +151,14 @@ Future<User> signInWithEmailAndPassword(String _email, String _password) async {
         if (user.uid == data["userId"]) {
           //maka variabel nama dan levelOrder bernilai username dan levelOrder dimana yang userId hasil dari seleksi
           name = data["username"];
+          phone = data["userNumber"];
           levelOrder = data["levelOrder"];
         }
       },
     );
     email = _email;
     imageUrl =
-        "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
+        "https://png.pngtree.com/png-vector/20190225/ourlarge/pngtree-vector-avatar-icon-png-image_702436.jpg";
     userId = user.uid;
     return user;
   } catch (e) {
