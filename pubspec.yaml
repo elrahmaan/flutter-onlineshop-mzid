@@ -39,7 +39,7 @@ dependencies:
   firebase_core: ^1.2.1
   google_sign_in: ^5.0.4
   flutter_svg: ^0.22.0
-
+  circular_profile_avatar: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
