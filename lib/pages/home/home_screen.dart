@@ -4,7 +4,7 @@ import 'package:online_shop/pages/cart/cart_screen.dart';
 import 'package:online_shop/pages/product_discover.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
-import 'package:online_shop/pages/order_list.dart';
+import 'package:online_shop/pages/order_history/order_list.dart';
 import 'package:online_shop/services/databases.dart';
 
 import '../../enums.dart';

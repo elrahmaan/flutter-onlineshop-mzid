@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:online_shop/widgets/order_item.dart';
+import 'package:online_shop/pages/order_history/components/order_item.dart';
 import 'package:online_shop/services/authentication.dart';
 
-import '../size_config.dart';
-import 'home/home_screen.dart';
+import '../../size_config.dart';
+import '../home/home_screen.dart';
 
 class OrderList extends StatefulWidget {
   @override
