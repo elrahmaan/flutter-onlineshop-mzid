@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:online_shop/pages/order_productItem.dart';
+import 'package:online_shop/pages/order/components/order_productItem.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/pages/order_history/order_list.dart';
 import 'package:online_shop/widgets/default_button.dart';
 
-import '../size_config.dart';
+import '../../size_config.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 

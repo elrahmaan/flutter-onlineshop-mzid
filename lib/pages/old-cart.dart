@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_shop/pages/old-home.dart';
-import 'package:online_shop/pages/order.dart';
+import 'package:online_shop/pages/order/order.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
 import 'package:online_shop/widgets/old-cart_item.dart';
