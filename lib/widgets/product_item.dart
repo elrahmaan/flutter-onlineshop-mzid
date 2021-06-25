@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shop/pages/detail/product_detail2.dart';
-import 'package:online_shop/pages/product_detail.dart';
 
 import '../constants.dart';
 

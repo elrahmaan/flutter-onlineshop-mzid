@@ -81,13 +81,6 @@ class _ProductDiscoveryState extends State<ProductDiscovery> {
               Row(
                 children: [],
               ),
-              // Container(
-              //   padding: EdgeInsets.only(left: 10),
-              //   child: Text(
-              //     category,
-              //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              //   ),
-              // ),
               Container(
                 // height: MediaQuery.of(context).size.height + 5,
                 height: 770,

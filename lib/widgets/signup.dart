@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:online_shop/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:online_shop/pages/login_page.dart';
@@ -17,11 +15,6 @@ class SignUp extends StatefulWidget {
 String email;
 String password;
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
-// String p =
-//     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-
-// RegExp regExp = new RegExp(p);
 
 class _SignUpState extends State<SignUp> {
   TextEditingController usernameController = TextEditingController();

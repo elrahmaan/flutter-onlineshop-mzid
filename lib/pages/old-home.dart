@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:online_shop/pages/cart.dart';
+import 'package:online_shop/pages/old-cart.dart';
 import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/pages/order_list.dart';
 import 'package:online_shop/pages/product_list.dart';

@@ -1,11 +1,6 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:online_shop/constants.dart';
-import 'package:online_shop/pages/cart.dart';
 import 'package:online_shop/pages/cart/cart_screen.dart';
-import 'package:online_shop/pages/home/components/icon_btn_with_counter.dart';
-import 'package:online_shop/pages/home/components/search_field.dart';
 import 'package:online_shop/pages/product_discover.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/coustom_bottom_nav_bar.dart';
@@ -36,10 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context) => ProductDiscovery()));
             },
             child: Container(
-              // decoration: BoxDecoration(
-              //   color: Color(0xFFF5F6F9),
-              //   borderRadius: BorderRadius.circular(50),
-              // ),
               child: SvgPicture.asset(
                 "assets/icons/Discover.svg",
                 color: Color(0xFF939393),
@@ -121,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           ListTile(
-            title: Text('Orders'),
+            title: Text('Order History'),
             leading: Icon(Icons.payments),
             onTap: () {
               setState(() {

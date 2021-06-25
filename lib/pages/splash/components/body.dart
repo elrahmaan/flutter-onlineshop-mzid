@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/login_page.dart';
 import 'package:online_shop/widgets/default_button.dart';
 

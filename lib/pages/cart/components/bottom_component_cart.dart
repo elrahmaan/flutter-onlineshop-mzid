@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:online_shop/pages/home/home_screen.dart';
 import 'package:online_shop/pages/order.dart';
 import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/services/databases.dart';
@@ -131,13 +130,29 @@ class _CheckoutCardState extends State<CheckoutCard> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Information'),
+                            title: const Text(
+                              'Information',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                             content: const Text(
                                 'Empty cart, please add the product'),
                             actions: <Widget>[
-                              TextButton(
+                              MaterialButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('OK'),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Container(
+                                  padding: EdgeInsets.all(2),
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                color: kPrimaryColor,
                               ),
                             ],
                           ),

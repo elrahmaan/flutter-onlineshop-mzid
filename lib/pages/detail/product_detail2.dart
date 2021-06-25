@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:online_shop/pages/detail/component/top_rounded_container.dart';
 import 'package:online_shop/services/authentication.dart';
@@ -278,15 +277,6 @@ class _ProductDetail2State extends State<ProductDetail2> {
         SizedBox(
           height: 10,
         ),
-        // Text(
-        //   "Quantity",
-        //   style: TextStyle(
-        //     fontSize: 18,
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
         Row(
           children: <Widget>[
             Container(

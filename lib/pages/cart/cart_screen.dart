@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:online_shop/pages/cart/components/custom_app_bar.dart';
 import 'package:online_shop/services/authentication.dart';
-import 'package:online_shop/widgets/cart_item.dart';
 
 import '../../size_config.dart';
 import 'components/cart_card.dart';
@@ -64,7 +61,6 @@ class _CartScreenState extends State<CartScreen> {
                     return Container();
                   }
                 },
-                // CartCard(cart: demoCarts[index]),
               ),
             ),
           ],
@@ -82,10 +78,6 @@ class _CartScreenState extends State<CartScreen> {
             "Your Cart",
             style: TextStyle(color: Colors.black),
           ),
-          // Text(
-          //   "${demoCarts.length} items",
-          //   style: Theme.of(context).textTheme.caption,
-          // ),
         ],
       ),
     );

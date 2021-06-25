@@ -1,20 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:online_shop/pages/home/components/section_title.dart';
 import 'package:online_shop/pages/product_list.dart';
-import 'package:online_shop/services/authentication.dart';
 import 'package:online_shop/widgets/category_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:online_shop/widgets/product_item.dart';
-
-import '../../../size_config.dart';
-import '../../login_page.dart';
-import '../home_screen.dart';
-import 'categories.dart';
 import 'discount_banner.dart';
-import 'home_header.dart';
-// import 'popular_product.dart';
-import 'special_offers.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -29,7 +19,6 @@ class _BodyState extends State<Body> {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          // HomeHeader(),
           _carouselImage(),
           DiscountBanner(),
           _category(),
@@ -67,18 +56,6 @@ class _BodyState extends State<Body> {
       margin: EdgeInsets.only(left: 10, right: 10),
       child: Column(
         children: <Widget>[
-          // Container(
-          //   height: MediaQuery.of(context).size.height * 0.1 - 30,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: <Widget>[
-          //       // Text(
-          //       //   "Categories",
-          //       //   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-          //       // ),
-          //     ],
-          //   ),
-          // ),
           Container(
             // height: 60,
             child: Row(
