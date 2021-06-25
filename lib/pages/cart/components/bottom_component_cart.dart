@@ -318,6 +318,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
                                 Navigator.pop(context);
                               },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Container(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
@@ -329,7 +331,7 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   ),
                                 ),
                               ),
-                              color: Color(0xFF1C1C1C),
+                              color: Colors.redAccent[400],
                             ),
 
                             //button order
@@ -345,7 +347,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                   ),
                                 ),
                               ),
-                              color: Color(0xFF1C1C1C),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              color: kPrimaryColor,
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   showDialog(
@@ -356,7 +360,16 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                         actions: [
                                           //BUTTON "Yes"
                                           MaterialButton(
-                                            child: Text("Yes"),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Text(
+                                              "Yes",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
                                             onPressed: () {
                                               var now = new DateTime.now();
                                               var formatter =
@@ -396,16 +409,25 @@ class _CheckoutCardState extends State<CheckoutCard> {
                                                                 status: status,
                                                               )));
                                             },
-                                            color: Color(0xFF1C1C1C),
+                                            color: kPrimaryColor,
                                           ),
 
                                           //BUTTON "Cancel"
                                           MaterialButton(
-                                            child: Text("Cancel"),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Text(
+                                              "Cancel",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                            color: Colors.red,
+                                            color: Colors.redAccent[400],
                                           ),
                                         ],
                                       );

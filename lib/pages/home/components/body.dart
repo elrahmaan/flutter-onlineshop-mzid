@@ -156,11 +156,11 @@ class _BodyState extends State<Body> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(left: 10),
+          margin: EdgeInsets.only(left: 10, top: 15, bottom: 7),
           alignment: Alignment.centerLeft,
           child: Text(
             "Featured Product",
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
